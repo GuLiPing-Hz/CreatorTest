@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package PbLobby;
+
+enum Cmd {
+	CMD_KEEPALIVED_BEGIN = 0;
+	//v1.0.0
+    CMD_KEEPALIVED_C2S      = 10000;   //心跳包测试
+    CMD_LOGIN_C2S2C         = 10001;   // 登录  MsgLoginC2S MsgLoginS2C
+    CMD_BINDPHONE_C2S2C     = 10002;   // 绑定手机号
+}
+
+message Test3{
+	int32 id = 1;//活动ID
+	string name = 2;//名字
+}

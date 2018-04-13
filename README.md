@@ -1,2 +1,2 @@
-# CreatorTest
-cocos creator 练手
+# hello-world
+Hello world new project template.
