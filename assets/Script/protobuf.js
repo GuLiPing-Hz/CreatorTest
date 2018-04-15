@@ -502,7 +502,7 @@
             /**/
             fetch.xhr = function fetch_xhr(filename, options, callback) {
                 if (filename.indexOf("http://") >= 0 || filename.indexOf("https://") >= 0)//这里增加https的解析
-                {
+                {//只有filename前缀是http的时候我们才去请求
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange /* works everywhere */ = function fetchOnReadyStateChange() {
 
@@ -545,21 +545,25 @@
                         var content = jsb.fileUtils.getStringFromFile(filename);
                         callback(null, content);
                     } else {
-                        cc.log("cc.loader load 1 filename=" + filename);
+                        //cc.log("cc.loader load 1 filename=" + filename);
                         //这里会去加载一个url图片 : "Host"+filename
-                        cc.loader.load(filename, function (error, result) {
-                            cc.log("error1=" + error + ",result = " + result + ",type=" + typeof result);
-                            // callback(null, result);
-                        });
-                        cc.log("cc.loader load 2");
+                        // cc.loader.load(filename, function (error, result) {
+                        //     cc.log("error1=" + error + ",result = " + result + ",type=" + typeof result);
+                        //     // callback(null, result);
+                        // });
+                        //cc.log("cc.loader load 2");
 
-                        // 这里回去加载resources目录下的文件 : "resources/"+ filename
+                        // 这里会去加载resources目录下的文件 : "resources/"+ filename
                         // 这里filename一般不用指定扩展名,当然你也可以强制指定
-                        cc.loader.loadRes(filename, cc.Asset, function (error, result) {
-                            cc.log("error2=" + error + ",result = " + result + ",type=" + typeof result);
-                            // callback(null, result);
+                        cc.loader.loadRes(filename, cc.TextAsset, function (error, result) {
+                            //cc.log("error2=" + error + ",result = " + result + ",type=" + typeof result);
+                            if(error){
+                                callback(Error("status " + error))
+                            }else{
+                                callback(null, result);
+                            }
                         });
-                        cc.log("cc.loader load 3");
+                        //cc.log("cc.loader load 3");
                     }
                 }
             };

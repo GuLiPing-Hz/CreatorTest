@@ -75,10 +75,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 14
+        "__id__": 15
       },
       {
-        "__id__": 15
+        "__id__": 16
       }
     ],
     "_prefab": null,
@@ -459,7 +459,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite(Splash)",
+    "_name": "fang",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -470,6 +470,9 @@
     "_components": [
       {
         "__id__": 13
+      },
+      {
+        "__id__": 14
       }
     ],
     "_prefab": null,
@@ -490,8 +493,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
-      "height": 100
+      "width": 60,
+      "height": 60
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -499,8 +502,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -338,
-      "y": -58
+      "x": -371,
+      "y": -103
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -518,7 +521,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
+      "__uuid__": "410fb916-8721-4663-bab8-34397391ace7"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -534,6 +537,25 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": null
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 12
+    },
+    "_enabled": true,
+    "_defaultClip": null,
+    "_clips": [
+      {
+        "__uuid__": "1378f386-4269-4614-ac9e-0aacf983bd5b"
+      },
+      {
+        "__uuid__": "c54bd6f6-4167-48b7-9553-15c6abb31637"
+      }
+    ],
+    "playOnLoad": true
   },
   {
     "__type__": "cc.Canvas",
@@ -565,6 +587,9 @@
     "_canvas": null,
     "cocos": {
       "__id__": 8
+    },
+    "fang": {
+      "__id__": 12
     },
     "text": "再见"
   }
