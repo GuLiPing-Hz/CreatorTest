@@ -313,8 +313,9 @@ message MsgLoginS2C{
 	int32 fortType = 19;		 //玩家当前使用的炮台
 	repeated int32 rewards = 20;		 //房间奖励配置 单位金币
 	int32 curDeskId = 21; 		 //当前玩家断线之前的桌子ID
-	int64 utc = 22;//服务器当前时间戳, 单位毫秒
-
+	string DeskPwd = 22;     //桌子密码
+	int64 utc = 23;//服务器当前时间戳, 单位毫秒
+    int32 isnewerReg = 24;  //是否是新注册用户
 }
 
 // 绑定手机号码

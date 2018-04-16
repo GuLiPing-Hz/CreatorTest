@@ -1,0 +1,20 @@
+{
+    "packageUrl": "http://172.20.34.1:8080/ver/game/",
+    "remoteManifestUrl": "http://172.20.34.1:8080/ver/game/1.0.0/project_platform.manifest",
+    "remoteVersionUrl": "http://172.20.34.1:8080/ver/game/1.0.0/version_platform.manifest",
+    "engineVersion": "3.16",
+
+    "version": "1.0.0",
+
+    "groupVersions": {
+
+    },
+
+    "assets": {
+
+    },
+
+    "searchPaths": [
+        "update"
+    ]
+}
