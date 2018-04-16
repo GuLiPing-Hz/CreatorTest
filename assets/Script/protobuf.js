@@ -465,6 +465,36 @@
                 if (!callback)
                     return asPromise(fetch, this, filename, options); // eslint-disable-line no-invalid-this
 
+                if (typeof cc !== "undefined") {//判断是否是cocos项目
+
+                    if (cc.sys.isNative) {//native
+                        var content = jsb.fileUtils.getStringFromFile(filename);
+                        callback(null, content);
+                    } else {
+                        //cc.log("cc.loader load 1 filename=" + filename);
+                        //这里可以加载一个url图片 : "Host"+filename
+                        // cc.loader.load(filename, function (error, result) {
+                        //     cc.log("error1=" + error + ",result = " + result + ",type=" + typeof result);
+                        //     // callback(null, result);
+                        // });
+                        //cc.log("cc.loader load 2");
+
+                        // 这里h5会去加载resources目录下的文件 : "resources/"+ filename
+                        // 这里filename一般不用指定扩展名,当然你也可以强制指定
+                        cc.loader.loadRes(filename, cc.TextAsset, function (error, result) {
+                            //cc.log("error2=" + error + ",result = " + result + ",type=" + typeof result);
+                            if (error) {
+                                callback(Error("status " + error))
+                            } else {
+                                callback(null, result);
+                            }
+                        });
+                        //cc.log("cc.loader load 3");
+                    }
+
+                    return;
+                }
+
                 // if a node-like filesystem is present, try it first but fall back to XHR if nothing is found.
                 if (!options.xhr && fs && fs.readFile)
                     return fs.readFile(filename, function fetchReadFileCallback(err, contents) {
@@ -501,71 +531,42 @@
 
             /**/
             fetch.xhr = function fetch_xhr(filename, options, callback) {
-                if (filename.indexOf("http://") >= 0 || filename.indexOf("https://") >= 0)//这里增加https的解析
-                {//只有filename前缀是http的时候我们才去请求
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange /* works everywhere */ = function fetchOnReadyStateChange() {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange /* works everywhere */ = function fetchOnReadyStateChange() {
 
-                        if (xhr.readyState !== 4)
-                            return undefined;
+                    if (xhr.readyState !== 4)
+                        return undefined;
 
-                        // local cors security errors return status 0 / empty string, too. afaik this cannot be
-                        // reliably distinguished from an actually empty file for security reasons. feel free
-                        // to send a pull request if you are aware of a solution.
-                        if (xhr.status !== 0 && xhr.status !== 200)
-                            return callback(Error("status " + xhr.status));
+                    // local cors security errors return status 0 / empty string, too. afaik this cannot be
+                    // reliably distinguished from an actually empty file for security reasons. feel free
+                    // to send a pull request if you are aware of a solution.
+                    if (xhr.status !== 0 && xhr.status !== 200)
+                        return callback(Error("status " + xhr.status));
 
-                        // if binary data is expected, make sure that some sort of array is returned, even if
-                        // ArrayBuffers are not supported. the binary string fallback, however, is unsafe.
-                        if (options.binary) {
-                            var buffer = xhr.response;
-                            if (!buffer) {
-                                buffer = [];
-                                for (var i = 0; i < xhr.responseText.length; ++i)
-                                    buffer.push(xhr.responseText.charCodeAt(i) & 255);
-                            }
-                            return callback(null, typeof Uint8Array !== "undefined" ? new Uint8Array(buffer) : buffer);
-                        }
-                        return callback(null, xhr.responseText);
-                    };
-
+                    // if binary data is expected, make sure that some sort of array is returned, even if
+                    // ArrayBuffers are not supported. the binary string fallback, however, is unsafe.
                     if (options.binary) {
-                        // ref: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data#Receiving_binary_data_in_older_browsers
-                        if ("overrideMimeType" in xhr)
-                            xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                        xhr.responseType = "arraybuffer";
+                        var buffer = xhr.response;
+                        if (!buffer) {
+                            buffer = [];
+                            for (var i = 0; i < xhr.responseText.length; ++i)
+                                buffer.push(xhr.responseText.charCodeAt(i) & 255);
+                        }
+                        return callback(null, typeof Uint8Array !== "undefined" ? new Uint8Array(buffer) : buffer);
                     }
+                    return callback(null, xhr.responseText);
+                };
 
-                    xhr.open("GET", filename);
-                    xhr.send();
+                if (options.binary) {
+                    // ref: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data#Receiving_binary_data_in_older_browsers
+                    if ("overrideMimeType" in xhr)
+                        xhr.overrideMimeType("text/plain; charset=x-user-defined");
+                    xhr.responseType = "arraybuffer";
                 }
-                else if (typeof cc !== "undefined")//判断是否是cocos项目
-                {
-                    if (typeof jsb !== "undefined" && jsb && jsb.fileUtils) {//native
-                        var content = jsb.fileUtils.getStringFromFile(filename);
-                        callback(null, content);
-                    } else {
-                        //cc.log("cc.loader load 1 filename=" + filename);
-                        //这里会去加载一个url图片 : "Host"+filename
-                        // cc.loader.load(filename, function (error, result) {
-                        //     cc.log("error1=" + error + ",result = " + result + ",type=" + typeof result);
-                        //     // callback(null, result);
-                        // });
-                        //cc.log("cc.loader load 2");
 
-                        // 这里会去加载resources目录下的文件 : "resources/"+ filename
-                        // 这里filename一般不用指定扩展名,当然你也可以强制指定
-                        cc.loader.loadRes(filename, cc.TextAsset, function (error, result) {
-                            //cc.log("error2=" + error + ",result = " + result + ",type=" + typeof result);
-                            if(error){
-                                callback(Error("status " + error))
-                            }else{
-                                callback(null, result);
-                            }
-                        });
-                        //cc.log("cc.loader load 3");
-                    }
-                }
+                xhr.open("GET", filename);
+                xhr.send();
+
             };
 
         }, {"1": 1, "7": 7}],

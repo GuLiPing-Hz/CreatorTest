@@ -24,7 +24,7 @@ cc.Class({
 
     /**
      * 测试cocos loadRes 只能加载单个资源
-     * 
+     *
      * 注意点:1 所有需要通过脚本动态加载的资源，都必须放置在 resources 文件夹或它的子文件夹下
      *       2 Creator相比之前的Cocos2d-html5，资源动态加载的时都是异步的，需要在回调函数中获得载入的资源
      */
@@ -166,7 +166,7 @@ cc.Class({
             cc.log("加载 SpriteAtlas（图集），并且获取其中的一个 SpriteFrame");
 
             var frame = result.getSpriteFrame('btn_go');
-            setTimeout(() => {
+            setTimeout(function () {
                 that.cocos.getComponent(cc.Sprite).spriteFrame = frame;
             }, 1000);
 
@@ -214,6 +214,23 @@ cc.Class({
     },
 
     testProtobuf: function () {
+        if (cc.sys.isNative) {//在native上加载失败，是因为没有找到目录，我们在testProtobuf函数里面添加一个搜索目录:
+            var wPath = jsb.fileUtils.getWritablePath();
+            cc.log("wPath =" + wPath);
+
+            cc.log("jsb.fileUtils=" + jsb.fileUtils);
+            //下面这段代码在PC window平台运行没问题，但是在android下面就出问题了
+            //jsb.fileUtils.addSearchPath("res\\raw-assets\\resources", true);
+            //需要改成这样：
+            jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//坑太多了。。没办法
+
+
+            // var content = jsb.fileUtils.getStringFromFile("test1.proto");
+            // cc.log("content 1 =" + content);
+            // return;
+        }
+
+        var that = this;
         var filename1 = "test1.proto";
         // cc.loader.loadRes(filename1, cc.TextAsset, function (error, result) {//指定加载文本资源
         //     cc.log("loadRes error=" + error + ",result = " + result + ",type=" + typeof result);
@@ -225,33 +242,33 @@ cc.Class({
             if (err)
                 throw err;
 
-            cc.log("root=" + root);
+            cc.log("root=" + JSON.stringify(root));
             for (var i in root) {
                 cc.log("root." + i + "=" + root[i]);
             }
             //return;
 
-            cc.log("加载protobuf完毕，开始测试protobuf...")
+            cc.log("加载protobuf完毕，开始测试protobuf...");
 
             var cmd = root.lookupEnum("PbLobby.Cmd");
-            cc.log(`cmd = ${JSON.stringify(cmd)}`);
-            cc.log("CMD_KEEPALIVED_C2S = "+cmd.values.CMD_KEEPALIVED_C2S);
+            cc.log("cmd = " + JSON.stringify(cmd));
+            cc.log("CMD_KEEPALIVED_C2S = " + cmd.values.CMD_KEEPALIVED_C2S);
 
             //lookup 等价于 lookupTypeOrEnum 
             //不同的是 lookup找不到返回null,lookupTypeOrEnum找不到则是抛出异常
             var type1 = root.lookup("PbLobby.Cmd1");
-            cc.log("type1 = "+type1);
+            cc.log("type1 = " + type1);
             var type2 = root.lookup("PbLobby.Test1");
-            cc.log("type2 = "+type2);
+            cc.log("type2 = " + type2);
 
             // Obtain a message type
             var Test1Message = root.lookupType("PbLobby.Test1");
-            cc.log("Test1Message = "+Test1Message);
+            cc.log("Test1Message = " + Test1Message);
 
             // Exemplary payload
-            var payload = { id: 1,name:"hello protobuf" };
+            var payload = {id: 1, name: "hello protobuf"};
             //var payload = { ids: 1,name:"hello protobuf" };
-            cc.log(`payload = ${JSON.stringify(payload)}`);
+            cc.log("payload = " + JSON.stringify(payload));
 
             //检查数据格式，测试了下发现没什么卵用
             // Verify the payload if necessary (i.e. when possibly incomplete or invalid)
@@ -260,23 +277,25 @@ cc.Class({
             //     cc.log("errMsg = "+errMsg);
             //     throw Error(errMsg);
             // }
-                
+
             //过滤掉一些message中的不存在的字段
             // Create a new message
             var message = Test1Message.create(payload); // or use .fromObject if conversion is necessary
-            cc.log(`message = ${JSON.stringify(message)}`);
+            cc.log("message = " + JSON.stringify(message));
 
             // Encode a message to an Uint8Array (browser) or Buffer (node)
             var buffer = Test1Message.encode(message).finish();
-            cc.log("buffer1 = "+buffer);
-            cc.log(`buffer2 = ${Array.prototype.toString.call(buffer)}`);
+            cc.log("buffer1 = " + buffer);
+            cc.log("buffer2 = " + Array.prototype.toString.call(buffer));
             // ... do something with buffer
 
             // Decode an Uint8Array (browser) or Buffer (node) to a message
             var decoded = Test1Message.decode(buffer);
-            cc.log("decoded1 = "+decoded);
-            cc.log(`decoded2 = ${JSON.stringify(decoded)}`);
+            cc.log("decoded1 = " + decoded);
+            cc.log("decoded2 = " + JSON.stringify(decoded));
             // ... do something with message
+
+            that.label.string = JSON.stringify(decoded);
 
             // If the application uses length-delimited buffers, there is also encodeDelimited and decodeDelimited.
 
@@ -288,7 +307,7 @@ cc.Class({
                 bytes: String,
                 // see ConversionOptions
             });
-            cc.log("object = "+JSON.stringify(object));
+            cc.log("object = " + JSON.stringify(object));
         });
     },
 
@@ -297,11 +316,11 @@ cc.Class({
         this.label.string = "你好1";//this.text;
 
         // this.testLoadRes();
+        //cc.log("onLoad 1");
 
         this.testProtobuf();
         return;
 
-        cc.log("onLoad 1");
 
         var filename1 = "test1.proto";
         //filename1 = "Data/test2.proto";
