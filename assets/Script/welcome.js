@@ -1,31 +1,35 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
     properties: {
+        label: {
+            //ATTRIBUTES:
+            default: null,        // The default value will be used only when the component attaching to a node for the first time
+            type: cc.Label // optional, default is typeof default
+        },
+        button: {
+            //ATTRIBUTES:
+            default: null,        // The default value will be used only when the component attaching to a node for the first time
+            type: cc.Node // optional, default is typeof default
+        },
         loadingBar: {
             //ATTRIBUTES:
-            default: null,        // The default value will be used only when the component attaching
-                                  // to a node for the first time
-            type: cc.ProgressBar, // optional, default is typeof default
+            default: null,        // The default value will be used only when the component attaching to a node for the first time
+            type: cc.ProgressBar // optional, default is typeof default
             //serializable: true,   // optional, default is true
+        },
+
+        //如果你想你的资源(resources以外的目录)发布到build，就得给他加依赖
+        manifestUrl: cc.RawAsset,
+
+        _failCount: {
+            default: 0
+        },
+
+        _assetManager: {
+            default: null,
         }
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
+
         // bar: {
         //     get () {
         //         return this._bar;
@@ -39,18 +43,28 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad: function () {
+        cc.log("onLoad test");
+
+        var that = this;
+        this.label.string = "检查版本";
+
+        // this.button.on(cc.Node.EventType.TOUCH_END, function () {
+        //     that.showProgress();
+        //     that._assetManager.update();
+        // }, this.button);
+
         cc.sys.dump();
-
-        // if(cc.sys.platform === cc.sys.ANDROID){//安卓降帧
-        cc.game.setFrameRate(1 / 60);//15帧,18,21,24
-        // }
-
-        // if (DebugConfig.isTest && !DebugConfig.isIOSJT) {
+        //
+        // // if(cc.sys.platform === cc.sys.ANDROID){//安卓降帧
+        cc.game.setFrameRate(60);//15帧,18,21,24
+        // // }
+        //
+        // // if (DebugConfig.isTest && !DebugConfig.isIOSJT) {
         cc.director.setDisplayStats(true);
-        // }
+        // // }
 
-        cc.loader.load()
-        //this.checkUpdate();
+        //cc.loader.load()
+        this.checkUpdate();
     },
 
     start: function () {
@@ -65,8 +79,8 @@ cc.Class({
             this.assetListener = null;
         }
 
-        if (this.assetManager && !cc.sys.ENABLE_GC_FOR_NATIVE_OBJECTS) {
-            this.assetManager.release();
+        if (this._assetManager && !cc.sys.ENABLE_GC_FOR_NATIVE_OBJECTS) {
+            this._assetManager.release();
         }
     },
 
@@ -90,9 +104,9 @@ cc.Class({
         // jsb.fileUtils.createDirectory(tempDelete);
         // jsb.fileUtils.removeDirectory(tempDelete);
 
-        Log.i("storagePath is " + storagePath);
+        Log.i("storagePath is " + storagePath + ",this.manifestUrl=" + this.manifestUrl);
         // jsb.fileUtils.addSearchPath("res/");
-        jsb.fileUtils.addSearchPath(storagePath + "update/", true);//所有数据包都需要存放到一个update的热更新目录中
+        // jsb.fileUtils.addSearchPath(storagePath + "update/", true);//所有数据包都需要存放到一个update的热更新目录中
 
         // Setup your own version compare handler, versionA and B is versions in string
         // if the return value greater than 0, versionA is greater than B,
@@ -120,13 +134,13 @@ cc.Class({
             }
         };
 
-        this.assetManager = new jsb.AssetsManager("project_platform.manifest", storagePath, this.versionCompareHandle);
+        this._assetManager = new jsb.AssetsManager(this.manifestUrl, storagePath, this.versionCompareHandle);
         if (!cc.sys.ENABLE_GC_FOR_NATIVE_OBJECTS) {
-            this.assetManager.retain();
+            this._assetManager.retain();
         }
 
-        //this.assetManager.setVerifyCallback(GameUtil.assetVerify);
-        this.assetManager.setVerifyCallback(function (path, asset) {
+        //this._assetManager.setVerifyCallback(GameUtil.assetVerify);
+        this._assetManager.setVerifyCallback(function (path, asset) {
             // When asset is compressed, we don't need to check its md5, because zip file have been deleted.
             var compressed = asset.compressed;
             // Retrieve the correct md5 value.
@@ -148,15 +162,15 @@ cc.Class({
         if (/*cc.sys.os === cc.sys.OS_ANDROID*/true) {
             // Some Android device may slow down the download process when concurrent tasks is too much.
             // The value may not be accurate, please do more test and find what's most suitable for your game.
-            this.assetManager.setMaxConcurrentTask(1);
+            this._assetManager.setMaxConcurrentTask(1);
             cc.log("Max concurrent tasks count have been limited to 2");
         }
 
-        if (!this.assetManager.getLocalManifest().isLoaded()) {
+        if (!this._assetManager.getLocalManifest().isLoaded()) {
             Log.e("Fail to update assets, step skipped.");
             this.loadGame();
         } else {
-            this.assetListener = new jsb.EventListenerAssetsManager(this.assetManager, function (event) {
+            this.assetListener = new jsb.EventListenerAssetsManager(this._assetManager, function (event) {
 
                 switch (event.getEventCode()) {
 
@@ -182,20 +196,24 @@ cc.Class({
 
                         Log.i("SceneUpdateScene : NEW_VERSION_FOUND " + event.getMessage());
 
-                        GameUtil.hideLoading();//隐藏等待框
-                        //我们需要更新。。。
-                        // var size = that.assetManager.getUpdateDownSize();
-                        // var tip = SceneUpdateRes.newVersion.format(GameUtil.formatSize(size));
-                        new DialogTip(GetCurLanTip("newVersion")).withBtnType(4, function (type) {
-                            if (type === 2) {// then--更新
-                                that.showProgress();
-                                that.assetManager.update();
-                            } else {
-                                //--退出游戏
-                                //director:endToLua()
-                                cc.director.end();
-                            }
-                        }).show(true);
+                        setTimeout(function () {
+                            that.button.active = true;
+                        }, 1000);
+
+                        // GameUtil.hideLoading();//隐藏等待框
+                        // //我们需要更新。。。
+                        // // var size = that._assetManager.getUpdateDownSize();
+                        // // var tip = SceneUpdateRes.newVersion.format(GameUtil.formatSize(size));
+                        // new DialogTip(GetCurLanTip("newVersion")).withBtnType(4, function (type) {
+                        //     if (type === 2) {// then--更新
+                        //         that.showProgress();
+                        //         that._assetManager.update();
+                        //     } else {
+                        //         //--退出游戏
+                        //         //director:endToLua()
+                        //         cc.director.end();
+                        //     }
+                        // }).show(true);
 
                         break;
                     case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
@@ -232,13 +250,13 @@ cc.Class({
 
                         Log.e("SceneUpdateScene : UPDATE_FAILED " + event.getMessage());
 
-                        failCount++;
+                        that.failCount++;
 
-                        if (failCount < 1) {
-                            that.assetManager.downloadFailedAssets();
+                        if (that.failCount < 1) {
+                            that._assetManager.downloadFailedAssets();
                         } else {
                             Log.i("Reach maximum fail count, exit update process");
-                            failCount = 0;
+                            that.failCount = 0;
                             that.showUpdateError(jsb.EventAssetsManager.UPDATE_FAILED);
                         }
 
@@ -257,13 +275,19 @@ cc.Class({
             });
             cc.eventManager.addListener(this.assetListener, 1);
 
-            //Log.i("call this.assetManager =" + this.assetManager);
-            //Log.i("call this.assetManager.checkUpdate =" + this.assetManager.checkUpdate);
-            this.assetManager.checkUpdate();//检查一下是否有更新
-            //this.assetManager.update();//这里是强制更新
+            //Log.i("call this._assetManager =" + this._assetManager);
+            //Log.i("call this._assetManager.checkUpdate =" + this._assetManager.checkUpdate);
+            this._assetManager.checkUpdate();//检查一下是否有更新
+            //this._assetManager.update();//这里是强制更新
             Log.i("SceneUpdateScene 5");
         }
 
+    },
+
+    doUpdate: function (event, customEventData) {
+        cc.log("event=", event.type, " data=", customEventData);
+        this.showProgress();
+        this._assetManager.update();
     },
 
     showProgress: function () {//显示进度条
@@ -298,7 +322,7 @@ cc.Class({
             this._updateListener = null;
             // Prepend the manifest's search path
             var searchPaths = jsb.fileUtils.getSearchPaths();
-            var newPaths = this._am.getLocalManifest().getSearchPaths();
+            var newPaths = this._assetManager.getLocalManifest().getSearchPaths();
             console.log(JSON.stringify(newPaths));
             Array.prototype.unshift(searchPaths, newPaths);
             // This value will be retrieved and appended to the default search path during game startup,
@@ -313,43 +337,42 @@ cc.Class({
 
         //return;
         // GameUtil.hideLoading();
-
-        var that = this;
-        //jsList是jsList.js的变量，记录全部js。
-        //动态加载
-        cc.loader.loadJs("", ["src/platformList.js"], function (error) {
-            if (error)
-                Log.i("load js src/platformList.js error=" + error);
-            else {
-                Log.i("load js src/platformList.js success");
-
-                for (var i in PlatformCleanListJs) {//清理已经加载的脚本文件,我们需要重新加载一次
-                    cc.sys.cleanScript(PlatformCleanListJs[i]);
-                }
-
-                var allListJs = [];//PlatformCleanListJs.concat(PlatformListJs);
-
-                //根据当前语言环境加载指定的文本提示文件
-                Log.i("cur language = " + cc.sys.language);
-                if (cc.sys.language === cc.sys.LANGUAGE_CHINESE)//中文
-                    allListJs.push("src/tips.js");
-                else//英文
-                    allListJs.push("src/tips_en.js");
-                allListJs = allListJs.concat(PlatformCleanListJs);
-                allListJs = allListJs.concat(PlatformListJs);
-
-                cc.loader.loadJs("", allListJs, function (error) {
-                    if (error)
-                        Log.i("load js list error=" + error);
-                    else {
-                        Log.i("load js list success! res version = " + Ver.version);
-
-                        //AudioModule.getInstance().initAudio();
-                        //热更新完成后，进入我们的登录场景
-                        //AppPresenter.getInstance().initFirstIntoLogin();
-                    }
-                });
-            }
-        });
+        // var that = this;
+        // //jsList是jsList.js的变量，记录全部js。
+        // //动态加载
+        // cc.loader.loadJs("", ["src/platformList.js"], function (error) {
+        //     if (error)
+        //         Log.i("load js src/platformList.js error=" + error);
+        //     else {
+        //         Log.i("load js src/platformList.js success");
+        //
+        //         for (var i in PlatformCleanListJs) {//清理已经加载的脚本文件,我们需要重新加载一次
+        //             cc.sys.cleanScript(PlatformCleanListJs[i]);
+        //         }
+        //
+        //         var allListJs = [];//PlatformCleanListJs.concat(PlatformListJs);
+        //
+        //         //根据当前语言环境加载指定的文本提示文件
+        //         Log.i("cur language = " + cc.sys.language);
+        //         if (cc.sys.language === cc.sys.LANGUAGE_CHINESE)//中文
+        //             allListJs.push("src/tips.js");
+        //         else//英文
+        //             allListJs.push("src/tips_en.js");
+        //         allListJs = allListJs.concat(PlatformCleanListJs);
+        //         allListJs = allListJs.concat(PlatformListJs);
+        //
+        //         cc.loader.loadJs("", allListJs, function (error) {
+        //             if (error)
+        //                 Log.i("load js list error=" + error);
+        //             else {
+        //                 Log.i("load js list success! res version = " + Ver.version);
+        //
+        //                 //AudioModule.getInstance().initAudio();
+        //                 //热更新完成后，进入我们的登录场景
+        //                 //AppPresenter.getInstance().initFirstIntoLogin();
+        //             }
+        //         });
+        //     }
+        // });
     }
 });

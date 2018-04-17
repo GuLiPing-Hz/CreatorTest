@@ -1,0 +1,22 @@
+{
+  "name": "hotupdate_main",
+  "version": "0.0.1",
+  "description": "The package template for getting started.",
+  "author": "Cocos Creator",
+  "main": "main.js",
+  "main-menu": {
+    "i18n:MAIN_MENU.package.title/hotupdate_main/open": {
+      "message": "hotupdate_main:open"
+    },
+    "i18n:MAIN_MENU.package.title/hotupdate_main/hello": {
+      "message": "hotupdate_main:say-hello"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "hotupdate_main",
+    "width": 400,
+    "height": 300
+  }
+}

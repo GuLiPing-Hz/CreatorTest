@@ -1,0 +1,68 @@
+[
+  [
+    {
+      "__type__": "cc.Prefab",
+      "_name": "button",
+      "data": {
+        "__id__": 1
+      },
+      "asyncLoadAssets": null
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "button",
+      "_components": [
+        {
+          "__type__": "cc.Sprite",
+          "node": {
+            "__id__": 1
+          },
+          "_spriteFrame": {
+            "__uuid__": "f5xXa297tMxa1p0VSaXZTq"
+          }
+        }
+      ],
+      "_prefab": {
+        "__type__": "cc.PrefabInfo",
+        "root": {
+          "__id__": 1
+        },
+        "asset": {
+          "__id__": 0
+        },
+        "fileId": "55yOyATsJPsLcLMAs7kfV2"
+      },
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 161,
+        "height": 74
+      },
+      "_position": {
+        "__type__": "cc.Vec2",
+        "x": 843,
+        "y": 427
+      }
+    }
+  ],
+  {
+    "__type__": "cc.SpriteFrame",
+    "content": {
+      "name": "btn_get",
+      "texture": "42bCYW8LFKt4mFHYTl3GJ5",
+      "rect": [
+        1,
+        1,
+        161,
+        74
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "originalSize": [
+        161,
+        74
+      ]
+    }
+  }
+]

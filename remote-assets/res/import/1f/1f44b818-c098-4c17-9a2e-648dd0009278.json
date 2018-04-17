@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "weekcard",
+    "texture": "9dMr9KOOpDUZbNyK8eb4ij",
+    "rect": [
+      0,
+      0,
+      196,
+      125
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      196,
+      125
+    ]
+  }
+}

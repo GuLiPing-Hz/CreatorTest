@@ -1,0 +1,195 @@
+{
+"packageUrl": "http://192.168.0.18:8080/CreatorTest/remote-assets/",
+"remoteManifestUrl": "http://192.168.0.18:8080/CreatorTest/remote-assets/project.manifest",
+"remoteVersionUrl": "http://192.168.0.18:8080/CreatorTest/remote-assets/version.manifest",
+"version": "1.0.0",
+"assets": {
+"src/jsb_polyfill.js": {
+"path": "update/src/jsb_polyfill.js",
+"size": 1031673,
+"md5": "a1e28f46fb005bc2ca19ce3183b0bd5a",
+"compressed": false
+},
+"src/project.dev.js": {
+"path": "update/src/project.dev.js",
+"size": 15393,
+"md5": "c70fcbcd8416ee5308c67a4c118a8dfa",
+"compressed": false
+},
+"src/settings.js": {
+"path": "update/src/settings.js",
+"size": 4821,
+"md5": "6dceaa4ad4e4ede8194a90cb26cb8a23",
+"compressed": false
+},
+"src/assets/Script/log.js": {
+"path": "update/src/assets/Script/log.js",
+"size": 329,
+"md5": "cbe7447320ca681fd997c6d1f5166b6f",
+"compressed": false
+},
+"src/assets/Script/protobuf.js": {
+"path": "update/src/assets/Script/protobuf.js",
+"size": 369582,
+"md5": "c695bf3be5b06dfa04ec681c757e7967",
+"compressed": false
+},
+"res/import/02/02dab0ad7.json": {
+"path": "update/res/import/02/02dab0ad7.json",
+"size": 1176,
+"md5": "5a4a623e0604d9681e6d48be84c4b073",
+"compressed": false
+},
+"res/import/04/044ab5d6d.json": {
+"path": "update/res/import/04/044ab5d6d.json",
+"size": 6234,
+"md5": "8886562f7f4dbb2c42e6c459790d173e",
+"compressed": false
+},
+"res/import/07/0751d6a98.json": {
+"path": "update/res/import/07/0751d6a98.json",
+"size": 8200,
+"md5": "b7609497d3dadb1bc8384560982ce48c",
+"compressed": false
+},
+"res/import/0a/0aa552174.json": {
+"path": "update/res/import/0a/0aa552174.json",
+"size": 2403,
+"md5": "3acf1e90fb4b9401000ecd5a6cdba3b5",
+"compressed": false
+},
+"res/import/0f/0f350326f.json": {
+"path": "update/res/import/0f/0f350326f.json",
+"size": 888,
+"md5": "120662ae2ccef020bfa23be4de4949b0",
+"compressed": false
+},
+"res/import/13/1378f386-4269-4614-ac9e-0aacf983bd5b.json": {
+"path": "update/res/import/13/1378f386-4269-4614-ac9e-0aacf983bd5b.json",
+"size": 2351,
+"md5": "e3f4ba692aebc27cfdd1bdc5c2573fbd",
+"compressed": false
+},
+"res/import/1f/1f44b818-c098-4c17-9a2e-648dd0009278.json": {
+"path": "update/res/import/1f/1f44b818-c098-4c17-9a2e-648dd0009278.json",
+"size": 268,
+"md5": "085765f62cdc78fc046f71768ae3eb83",
+"compressed": false
+},
+"res/import/4c/4caeadc0-6ab3-49b9-999c-49722a3e13ad.json": {
+"path": "update/res/import/4c/4caeadc0-6ab3-49b9-999c-49722a3e13ad.json",
+"size": 268,
+"md5": "9c9c276a7e2949d35ac9eabc0ef0b3cf",
+"compressed": false
+},
+"res/import/76/76ef7dac-25ef-42bf-bd7a-4c705106722a.json": {
+"path": "update/res/import/76/76ef7dac-25ef-42bf-bd7a-4c705106722a.json",
+"size": 270,
+"md5": "5710ddbe7847be149bdddc51aa9cca8f",
+"compressed": false
+},
+"res/import/c5/c54bd6f6-4167-48b7-9553-15c6abb31637.json": {
+"path": "update/res/import/c5/c54bd6f6-4167-48b7-9553-15c6abb31637.json",
+"size": 550,
+"md5": "48df02625d2314aa07f94f5506765f60",
+"compressed": false
+},
+"res/raw-assets/project.manifest": {
+"path": "update/res/raw-assets/project.manifest",
+"size": 6102,
+"md5": "bdf03a7ee0a44841f63ef83e64afc906",
+"compressed": false
+},
+"res/raw-assets/resources/HelloWorld.png": {
+"path": "update/res/raw-assets/resources/HelloWorld.png",
+"size": 37864,
+"md5": "55ea4e952bf080f300379ec26723598b",
+"compressed": false
+},
+"res/raw-assets/resources/PbLobby.proto": {
+"path": "update/res/raw-assets/resources/PbLobby.proto",
+"size": 17241,
+"md5": "fa82915a5a542d43d12801dadc2ada2c",
+"compressed": false
+},
+"res/raw-assets/resources/PlistBtn.png": {
+"path": "update/res/raw-assets/resources/PlistBtn.png",
+"size": 18579,
+"md5": "f0b3dafc2921ec0fb27467f8b99c5690",
+"compressed": false
+},
+"res/raw-assets/resources/test1.proto": {
+"path": "update/res/raw-assets/resources/test1.proto",
+"size": 252,
+"md5": "02993c22eae95f1def7c4b2789172558",
+"compressed": false
+},
+"res/raw-assets/resources/testJs.jsx": {
+"path": "update/res/raw-assets/resources/testJs.jsx",
+"size": 192,
+"md5": "91f269b9cfcd318ce47b22e795b6aaa7",
+"compressed": false
+},
+"res/raw-assets/resources/weekcard.png": {
+"path": "update/res/raw-assets/resources/weekcard.png",
+"size": 23433,
+"md5": "c216a259ccaf24fd27911b04f220444d",
+"compressed": false
+},
+"res/raw-assets/resources/Data/PbLobby.proto": {
+"path": "update/res/raw-assets/resources/Data/PbLobby.proto",
+"size": 17145,
+"md5": "5d9a6f05903632b0321e4d477b48df1c",
+"compressed": false
+},
+"res/raw-assets/resources/Data/test2.proto": {
+"path": "update/res/raw-assets/resources/Data/test2.proto",
+"size": 333,
+"md5": "890e23144e80ba4e0ce6facd5d4e036a",
+"compressed": false
+},
+"res/raw-assets/Texture/singleColor.png": {
+"path": "update/res/raw-assets/Texture/singleColor.png",
+"size": 17197,
+"md5": "e5136c625f53acd0366396e2b9d534ca",
+"compressed": false
+},
+"res/raw-internal/image/default_btn_disabled.png": {
+"path": "update/res/raw-internal/image/default_btn_disabled.png",
+"size": 205,
+"md5": "286c66af6af2b4adf897e854c8fcdb7a",
+"compressed": false
+},
+"res/raw-internal/image/default_btn_normal.png": {
+"path": "update/res/raw-internal/image/default_btn_normal.png",
+"size": 223,
+"md5": "1ecb7913bd1d9692e167ffaa4370a4ff",
+"compressed": false
+},
+"res/raw-internal/image/default_btn_pressed.png": {
+"path": "update/res/raw-internal/image/default_btn_pressed.png",
+"size": 164,
+"md5": "bedf498c7bdf5735810c87a234ae0311",
+"compressed": false
+},
+"res/raw-internal/image/default_progressbar.png": {
+"path": "update/res/raw-internal/image/default_progressbar.png",
+"size": 83,
+"md5": "69ff9be352a6b8559598031c1557a6c0",
+"compressed": false
+},
+"res/raw-internal/image/default_progressbar_bg.png": {
+"path": "update/res/raw-internal/image/default_progressbar_bg.png",
+"size": 83,
+"md5": "9cdfa6c2e9cdb65c6e77957099ddbbb5",
+"compressed": false
+},
+"res/raw-internal/image/default_sprite_splash.png": {
+"path": "update/res/raw-internal/image/default_sprite_splash.png",
+"size": 82,
+"md5": "cea68f0d7cba38440224f6f74531e2d8",
+"compressed": false
+}
+},
+"searchPaths": []
+}
