@@ -4,94 +4,94 @@
 "remoteVersionUrl": "http://192.168.0.18:8080/CreatorTest/1.0.0/remote-assets/version.manifest",
 "version": "1.0.0",
 "assets": {
-"src/jsb_polyfill.js": {
-"path": "src/jsb_polyfill.js",
-"size": 1031673,
-"md5": "a1e28f46fb005bc2ca19ce3183b0bd5a",
+"src/jsb_polyfill.jsc": {
+"path": "src/jsb_polyfill.jsc",
+"size": 134828,
+"md5": "f557b14e8ae5462b24903cb773e915dc",
 "compressed": false
 },
-"src/project.dev.js": {
-"path": "src/project.dev.js",
-"size": 16551,
-"md5": "0d4b042a9d3a0d42010cae9e0360e506",
+"src/project.jsc": {
+"path": "src/project.jsc",
+"size": 3724,
+"md5": "4bc7eef18c91971b70b41903b96ed5ab",
 "compressed": false
 },
-"src/settings.js": {
-"path": "src/settings.js",
-"size": 4831,
-"md5": "2d4d86aa3df331d0be1df3bd713125f5",
+"src/settings.jsc": {
+"path": "src/settings.jsc",
+"size": 1332,
+"md5": "f9b432c4b508a172524b50f4641988d3",
 "compressed": false
 },
-"src/assets/Script/log.js": {
-"path": "src/assets/Script/log.js",
-"size": 329,
-"md5": "cbe7447320ca681fd997c6d1f5166b6f",
+"src/assets/Script/log.jsc": {
+"path": "src/assets/Script/log.jsc",
+"size": 192,
+"md5": "c35e0a4e6e30443338a561cf533d68bd",
 "compressed": false
 },
-"src/assets/Script/protobuf.js": {
-"path": "src/assets/Script/protobuf.js",
-"size": 369582,
-"md5": "c695bf3be5b06dfa04ec681c757e7967",
+"src/assets/Script/protobuf.jsc": {
+"path": "src/assets/Script/protobuf.jsc",
+"size": 23336,
+"md5": "94165b66541274aa2767b8a50b776a2e",
 "compressed": false
 },
 "res/import/02/02dab0ad7.json": {
 "path": "res/import/02/02dab0ad7.json",
-"size": 1176,
-"md5": "5a4a623e0604d9681e6d48be84c4b073",
+"size": 622,
+"md5": "6300a4cdb098435055e8e57b43ce4744",
 "compressed": false
 },
 "res/import/04/044ab5d6d.json": {
 "path": "res/import/04/044ab5d6d.json",
-"size": 6234,
-"md5": "8886562f7f4dbb2c42e6c459790d173e",
+"size": 3218,
+"md5": "7791472d43202555c6ce4a9f5e4613c3",
 "compressed": false
 },
 "res/import/07/0751d6a98.json": {
 "path": "res/import/07/0751d6a98.json",
-"size": 8525,
-"md5": "66d1b10f78fd3dff07a909a2deb278e9",
+"size": 4402,
+"md5": "0140c26d454b3cfa1487a5bbb62745e8",
 "compressed": false
 },
 "res/import/0a/0aa552174.json": {
 "path": "res/import/0a/0aa552174.json",
-"size": 2403,
-"md5": "3acf1e90fb4b9401000ecd5a6cdba3b5",
+"size": 1055,
+"md5": "f90c69e398ab6cb197389f9314cc9279",
 "compressed": false
 },
 "res/import/0f/0f350326f.json": {
 "path": "res/import/0f/0f350326f.json",
-"size": 888,
-"md5": "120662ae2ccef020bfa23be4de4949b0",
+"size": 488,
+"md5": "1e7d08070c400cd56314c9b69779e9ea",
 "compressed": false
 },
 "res/import/13/1378f386-4269-4614-ac9e-0aacf983bd5b.json": {
 "path": "res/import/13/1378f386-4269-4614-ac9e-0aacf983bd5b.json",
-"size": 2351,
-"md5": "e3f4ba692aebc27cfdd1bdc5c2573fbd",
+"size": 935,
+"md5": "244c7188a919fc9299f99f20e192b9c9",
 "compressed": false
 },
 "res/import/1f/1f44b818-c098-4c17-9a2e-648dd0009278.json": {
 "path": "res/import/1f/1f44b818-c098-4c17-9a2e-648dd0009278.json",
-"size": 268,
-"md5": "085765f62cdc78fc046f71768ae3eb83",
+"size": 155,
+"md5": "ec5d5772894eb8356813835a509a910d",
 "compressed": false
 },
 "res/import/4c/4caeadc0-6ab3-49b9-999c-49722a3e13ad.json": {
 "path": "res/import/4c/4caeadc0-6ab3-49b9-999c-49722a3e13ad.json",
-"size": 268,
-"md5": "9c9c276a7e2949d35ac9eabc0ef0b3cf",
+"size": 155,
+"md5": "5a8e1a49cffa39cef8bf0e34e6b3d8b9",
 "compressed": false
 },
 "res/import/76/76ef7dac-25ef-42bf-bd7a-4c705106722a.json": {
 "path": "res/import/76/76ef7dac-25ef-42bf-bd7a-4c705106722a.json",
-"size": 270,
-"md5": "5710ddbe7847be149bdddc51aa9cca8f",
+"size": 157,
+"md5": "67bb02cd4dd9d5f42135f6ba602e597c",
 "compressed": false
 },
 "res/import/c5/c54bd6f6-4167-48b7-9553-15c6abb31637.json": {
 "path": "res/import/c5/c54bd6f6-4167-48b7-9553-15c6abb31637.json",
-"size": 550,
-"md5": "48df02625d2314aa07f94f5506765f60",
+"size": 239,
+"md5": "eaf1a0be964b7d8b76c7775a96d9b95d",
 "compressed": false
 },
 "res/raw-assets/resources/HelloWorld.png": {
