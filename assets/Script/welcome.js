@@ -224,7 +224,13 @@ cc.Class({
 
                         break;
                     case jsb.EventAssetsManager.UPDATE_PROGRESSION://更新进度条
-                        Log.i("SceneUpdateScene : UPDATE_PROGRESSION " + event.getPercent() + "," + event.getMessage());
+                        Log.i("SceneUpdateScene : UPDATE_PROGRESSION event.getPercent()=" + event.getPercent()
+                            + ",event.getPercentByFile()" + event.getPercentByFile()
+                            + ",event.getDownloadedFiles()" + event.getDownloadedFiles()
+                            + ",event.getTotalFiles()" + event.getTotalFiles()
+                            + ",event.getDownloadedFiles()" + event.getDownloadedFiles()
+                            + ",event.getTotalBytes()" + event.getTotalBytes()
+                            + ",event.getMessage()" + event.getMessage());
 
                         that.setProgress(event.getPercent());
 
@@ -292,10 +298,14 @@ cc.Class({
 
     showProgress: function () {//显示进度条
         //进度条
-        this.loadingBar.setVisible(true);
+        this.loadingBar.active = true;
+        this.loadingBar.progress = 0;
     },
 
     setProgress: function (percent) {//更新进度条
+        if (isNaN(percent))
+            percent = 0;
+
         if (this.loadingBar)
             this.loadingBar.progress = percent / 100.0;
     },

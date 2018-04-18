@@ -230,10 +230,6 @@ require = function() {
         cc.log("onLoad test");
         var that = this;
         this.label.string = "检查版本";
-        this.button.on(cc.Node.EventType.TOUCH_END, function() {
-          that.showProgress();
-          that._assetManager.update();
-        }, this.button);
         cc.sys.dump();
         cc.game.setFrameRate(60);
         cc.director.setDisplayStats(true);
@@ -304,7 +300,9 @@ require = function() {
 
              case jsb.EventAssetsManager.NEW_VERSION_FOUND:
               Log.i("SceneUpdateScene : NEW_VERSION_FOUND " + event.getMessage());
-              that.button.active = true;
+              setTimeout(function() {
+                that.button.active = true;
+              }, 1e3);
               break;
 
              case jsb.EventAssetsManager.ALREADY_UP_TO_DATE:
@@ -313,7 +311,7 @@ require = function() {
               break;
 
              case jsb.EventAssetsManager.UPDATE_PROGRESSION:
-              Log.i("SceneUpdateScene : UPDATE_PROGRESSION " + event.getPercent() + "," + event.getMessage());
+              Log.i("SceneUpdateScene : UPDATE_PROGRESSION event.getPercent()=" + event.getPercent() + ",event.getPercentByFile()" + event.getPercentByFile() + ",event.getDownloadedFiles()" + event.getDownloadedFiles() + ",event.getTotalFiles()" + event.getTotalFiles() + ",event.getDownloadedFiles()" + event.getDownloadedFiles() + ",event.getTotalBytes()" + event.getTotalBytes() + ",event.getMessage()" + event.getMessage());
               that.setProgress(event.getPercent());
               break;
 
@@ -359,10 +357,17 @@ require = function() {
           this.loadGame();
         }
       },
+      doUpdate: function doUpdate(event, customEventData) {
+        cc.log("event=", event.type, " data=", customEventData);
+        this.showProgress();
+        this._assetManager.update();
+      },
       showProgress: function showProgress() {
-        this.loadingBar.setVisible(true);
+        this.loadingBar.active = true;
+        this.loadingBar.progress = 0;
       },
       setProgress: function setProgress(percent) {
+        isNaN(percent) && (percent = 0);
         this.loadingBar && (this.loadingBar.progress = percent / 100);
       },
       showUpdateError: function showUpdateError(code) {

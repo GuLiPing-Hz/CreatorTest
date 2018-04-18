@@ -14,10 +14,6 @@ window._CCSettings = {
                 "Texture/singleColor.png",
                 "cc.Texture2D"
             ],
-            "61Ewx9Ie9KTYON3JAF5sQc": [
-                "project.manifest",
-                "cc.RawAsset"
-            ],
             "56eLwip4ZDdJd9/C+kgcp5": [
                 "resources/Data/PbLobby.proto",
                 "cc.RawAsset"
@@ -65,6 +61,10 @@ window._CCSettings = {
             "be5RpuFOVOBYgftwaNVNy2": [
                 "resources/button.prefab",
                 "cc.Prefab"
+            ],
+            "61Ewx9Ie9KTYON3JAF5sQc": [
+                "resources/project.manifest",
+                "cc.RawAsset"
             ],
             "544TwlevFIp5xL80GWWFb7": [
                 "resources/run.anim",

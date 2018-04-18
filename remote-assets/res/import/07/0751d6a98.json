@@ -161,7 +161,7 @@
         "__id__": 4
       },
       "_useOriginalSize": false,
-      "_N$string": "检查版本",
+      "_N$string": "检查版本1",
       "_N$horizontalAlign": 1,
       "_N$verticalAlign": 1
     },
@@ -179,7 +179,7 @@
       "_id": "5dV4rLX/dCnpt7PnyLIof8",
       "_contentSize": {
         "__type__": "cc.Size",
-        "width": 160,
+        "width": 182.25,
         "height": 40
       },
       "_position": {
@@ -224,6 +224,16 @@
             "g": 255,
             "b": 255
           },
+          "clickEvents": [
+            {
+              "__type__": "cc.ClickEvent",
+              "target": {
+                "__id__": 2
+              },
+              "component": "welcome",
+              "handler": "doUpdate"
+            }
+          ],
           "_N$normalColor": {
             "__type__": "cc.Color",
             "r": 255,
@@ -267,7 +277,7 @@
       },
       "_position": {
         "__type__": "cc.Vec2",
-        "x": 505,
+        "x": 480,
         "y": 182
       }
     },
