@@ -179,6 +179,8 @@ cc.Class({
         } else {
             this.assetListener = new jsb.EventListenerAssetsManager(this._assetManager, function (event) {
 
+                cc.log("EventListenerAssetsManager event=" + event);
+
                 switch (event.getEventCode()) {
 
                     case jsb.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST:
