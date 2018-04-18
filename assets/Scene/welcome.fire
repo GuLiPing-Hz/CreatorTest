@@ -124,7 +124,7 @@
       "width": 960,
       "height": 640
     },
-    "_fitWidth": false,
+    "_fitWidth": true,
     "_fitHeight": true
   },
   {
@@ -166,7 +166,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "检查版本1",
+    "_N$string": "检查版本",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -205,7 +205,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 182.25,
+      "width": 160,
       "height": 40
     },
     "_rotationX": 0,
@@ -458,7 +458,7 @@
     },
     "component": "welcome",
     "handler": "doUpdate",
-    "customEventData": ""
+    "customEventData": "glp"
   },
   {
     "__type__": "cc.ProgressBar",

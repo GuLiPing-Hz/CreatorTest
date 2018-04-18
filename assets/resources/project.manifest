@@ -12,8 +12,8 @@
 },
 "src/project.dev.js": {
 "path": "src/project.dev.js",
-"size": 15890,
-"md5": "e9f5d8c3bb5ca302f77edecc002eb32d",
+"size": 16551,
+"md5": "0d4b042a9d3a0d42010cae9e0360e506",
 "compressed": false
 },
 "src/settings.js": {
@@ -48,8 +48,8 @@
 },
 "res/import/07/0751d6a98.json": {
 "path": "res/import/07/0751d6a98.json",
-"size": 8460,
-"md5": "06f28c83282fc4f6d96fc9ac8ae6dc2b",
+"size": 8525,
+"md5": "66d1b10f78fd3dff07a909a2deb278e9",
 "compressed": false
 },
 "res/import/0a/0aa552174.json": {

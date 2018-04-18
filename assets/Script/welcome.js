@@ -1,3 +1,5 @@
+var STR_GameReStart = "GameReStart";
+
 cc.Class({
     extends: cc.Component,
 
@@ -28,8 +30,9 @@ cc.Class({
 
         _assetManager: {
             default: null,
-        }
+        },
 
+        _reStart: false,
         // bar: {
         //     get () {
         //         return this._bar;
@@ -45,7 +48,11 @@ cc.Class({
     onLoad: function () {
         cc.log("onLoad test");
 
-        var that = this;
+        //检查是否游戏更新重启的
+        this._reStart = cc.sys.localStorage.getItem(STR_GameReStart) === "1";
+        Log.i("this._reStart = " + this._reStart + ",type=" + typeof this._reStart);
+        cc.sys.localStorage.setItem(STR_GameReStart, "0");
+
         this.label.string = "检查版本";
 
         // this.button.on(cc.Node.EventType.TOUCH_END, function () {
@@ -196,9 +203,13 @@ cc.Class({
 
                         Log.i("SceneUpdateScene : NEW_VERSION_FOUND " + event.getMessage());
 
-                        setTimeout(function () {
-                            that.button.active = true;
-                        }, 1000);
+                        if (!that._reStart) {
+                            setTimeout(function () {
+                                that.button.active = true;
+                            }, 1000);
+                        } else {
+                            that.doUpdate();
+                        }
 
                         // GameUtil.hideLoading();//隐藏等待框
                         // //我们需要更新。。。
@@ -225,12 +236,12 @@ cc.Class({
                         break;
                     case jsb.EventAssetsManager.UPDATE_PROGRESSION://更新进度条
                         Log.i("SceneUpdateScene : UPDATE_PROGRESSION event.getPercent()=" + event.getPercent()
-                            + ",event.getPercentByFile()" + event.getPercentByFile()
-                            + ",event.getDownloadedFiles()" + event.getDownloadedFiles()
-                            + ",event.getTotalFiles()" + event.getTotalFiles()
-                            + ",event.getDownloadedFiles()" + event.getDownloadedFiles()
-                            + ",event.getTotalBytes()" + event.getTotalBytes()
-                            + ",event.getMessage()" + event.getMessage());
+                            + ",event.getPercentByFile()=" + event.getPercentByFile()
+                            + ",event.getDownloadedFiles()=" + event.getDownloadedFiles()
+                            + ",event.getTotalFiles()=" + event.getTotalFiles()
+                            + ",event.getDownloadedBytes()=" + event.getDownloadedBytes()
+                            + ",event.getTotalBytes()=" + event.getTotalBytes()
+                            + ",event.getMessage()=" + event.getMessage());
 
                         that.setProgress(event.getPercent());
 
@@ -291,7 +302,8 @@ cc.Class({
     },
 
     doUpdate: function (event, customEventData) {
-        cc.log("event=", event.type, " data=", customEventData);
+        if (event)
+            cc.log("event=", event.type, " data=", customEventData);
         this.showProgress();
         this._assetManager.update();
     },
@@ -307,7 +319,7 @@ cc.Class({
             percent = 0;
 
         if (this.loadingBar)
-            this.loadingBar.progress = percent / 100.0;
+            this.loadingBar.progress = percent;
     },
 
     showUpdateError: function (code) {
@@ -342,6 +354,8 @@ cc.Class({
             jsb.fileUtils.setSearchPaths(searchPaths);
 
             cc.audioEngine.stopAll();
+
+            cc.sys.localStorage.setItem(STR_GameReStart, "1");
             cc.game.restart();
         }
 
