@@ -20,6 +20,14 @@ cc.Class({
             type: cc.ProgressBar // optional, default is typeof default
             //serializable: true,   // optional, default is true
         },
+        btnGame1: {
+            default: null,
+            type: cc.Node
+        },
+        btnGame2: {
+            default: null,
+            type: cc.Node
+        },
 
         //如果你想你的资源(resources以外的目录)发布到build，就得给他加依赖
         manifestUrl: cc.RawAsset,
@@ -47,6 +55,10 @@ cc.Class({
 
     onLoad: function () {
         cc.log("onLoad test");
+
+        if (cc.sys.isNative) {//在native上加载失败，是因为没有找到目录，我们在testProtobuf函数里面添加一个搜索目录:
+            jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//坑太多了。。没办法
+        }
 
         //检查是否游戏更新重启的
         this._reStart = cc.sys.localStorage.getItem(STR_GameReStart) === "1";
@@ -305,13 +317,34 @@ cc.Class({
 
     doUpdate: function (event, customEventData) {
         if (event)
-            cc.log("event=", event.type, " data=", customEventData);
+            cc.log("doUpdate event=", event.type, " data=", customEventData);
         this.showProgress();
         this._assetManager.update();
     },
 
-    showProgress: function () {//显示进度条
-        //进度条
+    clickGoGame: function (event, customEventData) {
+        if (event)
+            cc.log("clickGoGame event=", event.type, " data=", customEventData);
+
+        if (cc.sys.isNative) {
+            if (customEventData === "1") {
+                // require(this._storagePath + "/src/main.js");
+                // require("Game1/main.js");
+                cc.loader.loadRes("Game1/main.js", cc.TextAsset, function (err, result) {
+                    if (err) {
+                        cc.log("clickGoGame err = " + err);
+                    } else {
+                        cc.log("clickGoGame load TextAsset JS = " + result);
+                        eval(result);
+                    }
+                });
+            }
+        }
+
+    },
+
+    showProgress: function () {
+        //显示进度条
         this.loadingBar.active = true;
         this.loadingBar.progress = 0;
     },
@@ -340,7 +373,7 @@ cc.Class({
     },
 
     loadGame: function (needRestart) {//加载完成或失败的回调
-
+        cc.log("loadGame needRestart=" + needRestart);
         if (needRestart) {
             cc.eventManager.removeListener(this._updateListener);
             this._updateListener = null;
@@ -359,46 +392,11 @@ cc.Class({
 
             cc.sys.localStorage.setItem(STR_GameReStart, "1");
             cc.game.restart();
-        }
+        } else {//游戏更新检查完毕
+            cc.log("游戏更新检查完毕");
 
-        //return;
-        // GameUtil.hideLoading();
-        // var that = this;
-        // //jsList是jsList.js的变量，记录全部js。
-        // //动态加载
-        // cc.loader.loadJs("", ["src/platformList.js"], function (error) {
-        //     if (error)
-        //         Log.i("load js src/platformList.js error=" + error);
-        //     else {
-        //         Log.i("load js src/platformList.js success");
-        //
-        //         for (var i in PlatformCleanListJs) {//清理已经加载的脚本文件,我们需要重新加载一次
-        //             cc.sys.cleanScript(PlatformCleanListJs[i]);
-        //         }
-        //
-        //         var allListJs = [];//PlatformCleanListJs.concat(PlatformListJs);
-        //
-        //         //根据当前语言环境加载指定的文本提示文件
-        //         Log.i("cur language = " + cc.sys.language);
-        //         if (cc.sys.language === cc.sys.LANGUAGE_CHINESE)//中文
-        //             allListJs.push("src/tips.js");
-        //         else//英文
-        //             allListJs.push("src/tips_en.js");
-        //         allListJs = allListJs.concat(PlatformCleanListJs);
-        //         allListJs = allListJs.concat(PlatformListJs);
-        //
-        //         cc.loader.loadJs("", allListJs, function (error) {
-        //             if (error)
-        //                 Log.i("load js list error=" + error);
-        //             else {
-        //                 Log.i("load js list success! res version = " + Ver.version);
-        //
-        //                 //AudioModule.getInstance().initAudio();
-        //                 //热更新完成后，进入我们的登录场景
-        //                 //AppPresenter.getInstance().initFirstIntoLogin();
-        //             }
-        //         });
-        //     }
-        // });
+            this.btnGame1.active = true;
+            this.btnGame2.active = true;
+        }
     }
 });

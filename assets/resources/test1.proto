@@ -1,5 +1,6 @@
-package PbLobby;
 syntax = "proto3";
+
+package PbLobby;
 
 enum Cmd {
 	CMD_BEGIN = 0;
