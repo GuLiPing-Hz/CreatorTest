@@ -7,6 +7,13 @@ enum Cmd {
     CMD_LOGIN_C2S2C         = 10001;   // 登录
 }
 
+message MsgHead{
+	int32 cmd = 1;//包命令
+	int32 ret = 2;//返回值
+	int32 seq = 3;//序列值
+	bytes content = 4;//包内容
+}
+
 message Test1{
 	int32 id = 1;//活动ID
 	string name = 2;//名字

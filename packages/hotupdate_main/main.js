@@ -42,7 +42,9 @@ module.exports = {
                     "        if (hotUpdateSearchPaths) { \n" +
                     "            jsb.fileUtils.setSearchPaths(JSON.parse(hotUpdateSearchPaths)); \n" +
                     "        }\n" +
-                    "    }";
+                    "    }" +
+                    "    // 这是为了解决一个重启的 bug 而添加的\n" +
+                    "    cc.director.startAnimation();";
 
                 var newData = data.replace("(function () {", newStr);
                 Fs.writeFile(url, newData, function (error) {

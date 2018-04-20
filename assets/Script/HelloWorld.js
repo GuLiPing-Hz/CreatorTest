@@ -224,21 +224,20 @@ cc.Class({
             //需要改成这样：
             jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//坑太多了。。没办法
 
-
             // var content = jsb.fileUtils.getStringFromFile("test1.proto");
             // cc.log("content 1 =" + content);
             // return;
         }
 
         var that = this;
-        var filename1 = "test1.proto";
+        var filenames = ["test1.proto"];//"test1.proto" 单个文件或是数组
         // cc.loader.loadRes(filename1, cc.TextAsset, function (error, result) {//指定加载文本资源
         //     cc.log("loadRes error=" + error + ",result = " + result + ",type=" + typeof result);
         //     // callback(null, result);
         // });
 
         var protobufHere = protobuf;//require("protobuf");//导入为插件，直接使用
-        protobufHere.load(filename1, function (err, root) {//Data/PbLobby.proto
+        protobufHere.load(filenames, function (err, root) {//Data/PbLobby.proto
             if (err)
                 throw err;
 
@@ -260,6 +259,8 @@ cc.Class({
             cc.log("type1 = " + type1);
             var type2 = root.lookup("PbLobby.Test1");
             cc.log("type2 = " + type2);
+
+            var MsgHeadMessage = root.lookupType("PbLobby.MsgHead");
 
             // Obtain a message type
             var Test1Message = root.lookupType("PbLobby.Test1");
@@ -289,8 +290,20 @@ cc.Class({
             cc.log("buffer2 = " + Array.prototype.toString.call(buffer));
             // ... do something with buffer
 
+            // Exemplary payload
+            var payloadHead = {cmd: 101, ret: 0, seq: 0, content: buffer};
+            //var payload = { ids: 1,name:"hello protobuf" };
+            cc.log("MsgHeadMessage payload = " + JSON.stringify(payloadHead));
+
+            var messageHead = MsgHeadMessage.create(payloadHead);
+            var bufferHead = MsgHeadMessage.encode(messageHead).finish();
+            cc.log("bufferHead = " + bufferHead);
+
+            var decodedHead = MsgHeadMessage.decode(bufferHead);
+            cc.log("decodedHead = " + JSON.stringify(decodedHead));
+
             // Decode an Uint8Array (browser) or Buffer (node) to a message
-            var decoded = Test1Message.decode(buffer);
+            var decoded = Test1Message.decode(decodedHead.content);
             cc.log("decoded1 = " + decoded);
             cc.log("decoded2 = " + JSON.stringify(decoded));
             // ... do something with message
@@ -308,6 +321,8 @@ cc.Class({
                 // see ConversionOptions
             });
             cc.log("object = " + JSON.stringify(object));
+
+
         });
     },
 
