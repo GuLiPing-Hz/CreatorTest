@@ -330,7 +330,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 153.37,
+      "width": 350.04,
       "height": 60
     },
     "_rotationX": 0,
@@ -365,7 +365,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "游戏1",
+    "_N$string": "这里是游戏 1",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -388,7 +388,7 @@
     "_fitHeight": true
   },
   {
-    "__type__": "280c3rsZJJKnZ9RqbALVwtK",
+    "__type__": "6e367lJqsBE9pzC2JQSeJ+q",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -398,6 +398,6 @@
     "label": {
       "__id__": 9
     },
-    "text": "Hello, World!"
+    "text": ""
   }
 ]

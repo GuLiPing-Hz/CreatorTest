@@ -16,12 +16,12 @@ module.exports = {
     messages: {
         'open'() {
             // open entry panel registered in package.json
-            Editor.Panel.open('hotupdate_main');
+            Editor.Panel.open('game_update');
         },
         'say-hello'() {
             Editor.log('Hello World!');
             // send ipc message to panel
-            Editor.Ipc.sendToPanel('hotupdate_main', 'hotupdate_main:hello');
+            Editor.Ipc.sendToPanel('game_update', 'game_update:hello');
         },
         'clicked'() {
             Editor.log('Button clicked!');
@@ -51,8 +51,8 @@ module.exports = {
                 var newData = "(function () {\n" +
                     "\n" +
                     "    cc.custom = {};\n" +
-                    "    cc.custom.isLobby = true;\n" +
-                    "    cc.custom.curDir = \"\";\n" +
+                    "    cc.custom.isLobby = false;\n" +
+                    "    cc.custom.curDir = \"C:/Users/Administrator/AppData/Local/hello_world/Game1/\";\n" +
                     "    console.log(\"cc.custom.curDir=\" + cc.custom.curDir);\n" +
                     "\n" +
                     "    if (cc.sys.isNative && cc.custom.isLobby) {\n" +
@@ -287,7 +287,7 @@ module.exports = {
                     if (err) {
                         throw err;
                     }
-                    Editor.log("SearchPath updated in built main.js for hot update lobby");
+                    Editor.log("SearchPath updated in built main.js for hot update game");
                 });
             });
         }

@@ -83,7 +83,8 @@ cc.Class({
         // // }
 
         //cc.loader.load()
-        this.checkUpdate();
+        // this.checkUpdate();
+        this.loadGame();
     },
 
     start: function () {
@@ -328,16 +329,26 @@ cc.Class({
 
         if (cc.sys.isNative) {
             if (customEventData === "1") {
-                // require(this._storagePath + "/src/main.js");
+                var path = "C:/Users/Administrator/AppData/Local/hello_world/Game1";
+                require(path + "/main.js");
                 // require("Game1/main.js");
-                cc.loader.loadRes("Game1/main.js", cc.TextAsset, function (err, result) {
-                    if (err) {
-                        cc.log("clickGoGame err = " + err);
-                    } else {
-                        cc.log("clickGoGame load TextAsset JS = " + result);
-                        eval(result);
-                    }
-                });
+
+                // cc.loader.load(cc.url.raw("resources/Game1/main.js"), function (err, result) {
+                //     if (err) {
+                //         cc.log("clickGoGame err = " + err);
+                //     } else {
+                //         cc.log("clickGoGame load resources/Game1/main.js result = " + result);
+                //         eval(result);
+                //     }
+                // });
+                // cc.loader.loadRes("Game1/main.js", cc.TextAsset, function (err, result) {
+                //     if (err) {
+                //         cc.log("clickGoGame err = " + err);
+                //     } else {
+                //         cc.log("clickGoGame load TextAsset JS = " + result);
+                //         eval(result);
+                //     }
+                // });
             }
         }
 

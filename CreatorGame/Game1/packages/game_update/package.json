@@ -1,0 +1,22 @@
+{
+  "name": "game_update",
+  "version": "0.0.1",
+  "description": "The package template for getting started.",
+  "author": "Cocos Creator",
+  "main": "main.js",
+  "main-menu": {
+    "i18n:MAIN_MENU.package.title/game_update/open": {
+      "message": "game_update:open"
+    },
+    "i18n:MAIN_MENU.package.title/game_update/hello": {
+      "message": "game_update:say-hello"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "game_update",
+    "width": 400,
+    "height": 300
+  }
+}
