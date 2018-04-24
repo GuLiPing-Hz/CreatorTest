@@ -22,5 +22,9 @@ cc.Class({
 
     clickBack: function (event, data) {
         console.log("clickBack");
+
+        // cc.log("cc.isBackFromGame = " + cc.isBackFromGame);
+        // cc.isBackFromGame = true;
+        // require("" + "main.js");
     },
 });

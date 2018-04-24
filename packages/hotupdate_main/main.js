@@ -65,6 +65,7 @@ module.exports = {
                     "    'use strict';\n" +
                     "\n" +
                     "    function boot() {\n" +
+                    "        console.log(\"boot begin\");\n" +
                     "\n" +
                     "        var settings = window._CCSettings;\n" +
                     "        window._CCSettings = undefined;\n" +
@@ -169,6 +170,8 @@ module.exports = {
                     "                }\n" +
                     "            }\n" +
                     "\n" +
+                    "            console.log((cc.custom.isLobby ? \"大厅\" : \"子游戏\") + \"settings.packedAssets=\" + JSON.stringify(settings.packedAssets));\n" +
+                    "\n" +
                     "            // init assets\n" +
                     "            cc.AssetLibrary.init({\n" +
                     "                libraryPath: cc.custom.curDir + 'res/import',\n" +
@@ -210,6 +213,7 @@ module.exports = {
                     "        else {\n" +
                     "            jsList = [bundledScript];\n" +
                     "        }\n" +
+                    "        console.log(\"jsList = \" + JSON.stringify(jsList));\n" +
                     "\n" +
                     "        // anysdk scripts\n" +
                     "        if (cc.sys.isNative && cc.sys.isMobile && cc.custom.isLobby) {//大厅才去加载anysdk\n" +
@@ -232,28 +236,80 @@ module.exports = {
                     "        };\n" +
                     "\n" +
                     "        cc.game.run(option, onStart);\n" +
+                    "\n" +
+                    "        console.log(\"boot end\");\n" +
                     "    }\n" +
                     "\n" +
-                    "    console.log('=========================进入子游戏');\n" +
+                    "    console.log('=========================' + (cc.custom.isLobby ? \"进入大厅\" : \"进入子游戏\"));\n" +
                     "\n" +
                     "    if (window.jsb) {\n" +
                     "\n" +
                     "        if (!cc.custom.isLobby) {\n" +
                     "            // if (!cc.chilgame) {\n" +
+                    "\n" +
+                    "\n" +
                     "            require(cc.custom.curDir + 'src/settings.js');\n" +
-                    "            cc.chilgame = window._CCSettings;\n" +
+                    "            cc.childgameSetting = window._CCSettings;\n" +
+                    "\n" +
                     "            console.log('加载settings.js成功   cc.chilgame=' + JSON.stringify(cc.chilgame));\n" +
-                    "            var projectJs = window._CCSettings.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
-                    "            projectJs = cc.custom.curDir + projectJs;\n" +
-                    "            require(projectJs);\n" +
-                    "            console.log('加载' + projectJs + '成功');\n" +
+                    "            // var projectJs = window._CCSettings.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
+                    "            // projectJs = cc.custom.curDir + projectJs;\n" +
+                    "            // require(projectJs);\n" +
+                    "            // console.log('加载' + projectJs + '成功');\n" +
+                    "\n" +
+                    "            var jsList = [];\n" +
+                    "            if (cc.lobbySetting) {//移出重复的插件脚本\n" +
+                    "                for (var i in cc.childgameSetting) {\n" +
+                    "                    var isFindInLobby = false;\n" +
+                    "\n" +
+                    "                    for (var j in cc.lobbySetting) {\n" +
+                    "                        if (cc.childgameSetting[i] == cc.lobbySetting[j]) {\n" +
+                    "                            isFindInLobby = true;\n" +
+                    "                            break;\n" +
+                    "                        }\n" +
+                    "                    }\n" +
+                    "\n" +
+                    "                    if (!isFindInLobby)\n" +
+                    "                        jsList.push(cc.childgameSetting[i]);\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            //子游戏不会在cc.game.run中再去加载，所以我们需要再这里加载一下我们的js脚本\n" +
+                    "            var bundledScript = cc.childgameSetting.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
+                    "            bundledScript = cc.custom.curDir + bundledScript;\n" +
+                    "            if (jsList) {\n" +
+                    "                jsList = jsList.map(function (x) {\n" +
+                    "                    return cc.custom.curDir + 'src/' + x;\n" +
+                    "                });\n" +
+                    "                jsList.push(bundledScript);\n" +
+                    "            }\n" +
+                    "            else {\n" +
+                    "                jsList = [bundledScript];\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            for (var i in jsList) {\n" +
+                    "                console.log(\"加载 jsList[\" + i + \"] = \" + jsList[i]);\n" +
+                    "                require(jsList[i]);\n" +
+                    "            }\n" +
+                    "\n" +
                     "            // } else {\n" +
                     "            //     console.log('读取之前的加载   cc.chilgame=' + JSON.stringify(cc.chilgame));\n" +
                     "            //     window._CCSettings = cc.chilgame;\n" +
                     "            // }\n" +
                     "        } else {\n" +
+                    "\n" +
                     "            require(cc.custom.curDir + 'src/settings.js');\n" +
-                    "            require(cc.custom.curDir + 'src/jsb_polyfill.js');\n" +
+                    "            cc.lobbySetting = window._CCSettings;//保存我们的大厅设置\n" +
+                    "\n" +
+                    "            console.log(\"cc.isBackFromBack = \" + cc.isBackFromBack);\n" +
+                    "            if (cc.isBackFromBack) {\n" +
+                    "                var bundledScript = cc.lobbySetting.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
+                    "                bundledScript = cc.custom.curDir + bundledScript;\n" +
+                    "            } else {\n" +
+                    "                require(cc.custom.curDir + 'src/jsb_polyfill.js');\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            cc.isBackFromBack = false;\n" +
                     "        }\n" +
                     "\n" +
                     "        boot();\n" +
@@ -282,7 +338,7 @@ module.exports = {
                     "        document.body.appendChild(cocos2d);\n" +
                     "    }\n" +
                     "\n" +
-                    "})();\n";
+                    "})();";
                 Fs.writeFile(url, newData, function (error) {
                     if (err) {
                         throw err;
