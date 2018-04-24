@@ -169,6 +169,8 @@ module.exports = {
                     "                }\n" +
                     "            }\n" +
                     "\n" +
+                    "            console.log((cc.custom.isLobby ? \"大厅\" : \"子游戏\")+\"settings.packedAssets=\" + JSON.stringify(settings.packedAssets));\n" +
+                    "\n" +
                     "            // init assets\n" +
                     "            cc.AssetLibrary.init({\n" +
                     "                libraryPath: cc.custom.curDir + 'res/import',\n" +
@@ -234,7 +236,7 @@ module.exports = {
                     "        cc.game.run(option, onStart);\n" +
                     "    }\n" +
                     "\n" +
-                    "    console.log('=========================进入子游戏');\n" +
+                    "    console.log('=========================' + (cc.custom.isLobby ? \"进入大厅\" : \"进入子游戏\"));\n" +
                     "\n" +
                     "    if (window.jsb) {\n" +
                     "\n" +

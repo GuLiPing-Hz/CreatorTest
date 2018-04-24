@@ -19,4 +19,8 @@ cc.Class({
     update: function (dt) {
 
     },
+
+    clickBack: function (event, data) {
+        console.log("clickBack");
+    },
 });
