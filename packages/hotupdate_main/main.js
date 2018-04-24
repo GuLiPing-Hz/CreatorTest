@@ -51,8 +51,14 @@ module.exports = {
                 var newData = "(function () {\n" +
                     "\n" +
                     "    cc.custom = {};\n" +
-                    "    cc.custom.isLobby = true;\n" +
-                    "    cc.custom.curDir = \"\";\n" +
+                    "    //配置变量，游戏ID,0表示大厅\n" +
+                    "    cc.custom.gameId = 0;\n" +
+                    "\n" +
+                    "    cc.custom.gameName = \"Game\" + cc.custom.gameId;\n" +
+                    "    cc.custom.lobbyName = \"Game0\";\n" +
+                    "\n" +
+                    "    cc.custom.isLobby = cc.custom.gameId === 0;\n" +
+                    "    cc.custom.curDir = cc.custom.isLobby ? \"\" : \"Game\" + gameId + \"/\";\n" +
                     "    console.log(\"cc.custom.curDir=\" + cc.custom.curDir);\n" +
                     "\n" +
                     "    if (cc.sys.isNative && cc.custom.isLobby) {\n" +
@@ -245,37 +251,39 @@ module.exports = {
                     "    if (window.jsb) {\n" +
                     "\n" +
                     "        if (!cc.custom.isLobby) {\n" +
-                    "            // if (!cc.chilgame) {\n" +
                     "\n" +
-                    "\n" +
-                    "            require(cc.custom.curDir + 'src/settings.js');\n" +
-                    "            cc.childgameSetting = window._CCSettings;\n" +
-                    "\n" +
-                    "            console.log('加载settings.js成功   cc.chilgame=' + JSON.stringify(cc.chilgame));\n" +
-                    "            // var projectJs = window._CCSettings.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
-                    "            // projectJs = cc.custom.curDir + projectJs;\n" +
-                    "            // require(projectJs);\n" +
-                    "            // console.log('加载' + projectJs + '成功');\n" +
+                    "            if (cc[cc.custom.gameName]) {\n" +
+                    "                window._CCSettings = cc[cc.custom.gameName];\n" +
+                    "                console.log('读取settings.js成功   window._CCSettings=' + JSON.stringify(window._CCSettings));\n" +
+                    "            } else {\n" +
+                    "                require(cc.custom.curDir + 'src/settings.js');\n" +
+                    "                cc[cc.custom.gameName] = window._CCSettings;\n" +
+                    "                console.log('加载settings.js成功   cc[' + cc.custom.gameName + ']=' + JSON.stringify(cc[cc.custom.gameName]));\n" +
+                    "            }\n" +
                     "\n" +
                     "            var jsList = [];\n" +
-                    "            if (cc.lobbySetting) {//移出重复的插件脚本\n" +
-                    "                for (var i in cc.childgameSetting) {\n" +
+                    "            if (cc[cc.custom.lobbyName]) {//移出重复的插件脚本\n" +
+                    "                for (var i in cc[cc.custom.gameName]) {\n" +
                     "                    var isFindInLobby = false;\n" +
                     "\n" +
-                    "                    for (var j in cc.lobbySetting) {\n" +
-                    "                        if (cc.childgameSetting[i] == cc.lobbySetting[j]) {\n" +
+                    "                    for (var j in cc[cc.custom.lobbyName]) {\n" +
+                    "                        if (cc[cc.custom.gameName][i] == cc[cc.custom.lobbyName][j]) {\n" +
                     "                            isFindInLobby = true;\n" +
                     "                            break;\n" +
                     "                        }\n" +
                     "                    }\n" +
                     "\n" +
                     "                    if (!isFindInLobby)\n" +
-                    "                        jsList.push(cc.childgameSetting[i]);\n" +
+                    "                        jsList.push(cc[cc.custom.gameName][i]);\n" +
+                    "                }\n" +
+                    "            } else {\n" +
+                    "                for (var j in cc[cc.custom.gameName]) {\n" +
+                    "                    jsList.push(cc[cc.custom.gameName][i]);\n" +
                     "                }\n" +
                     "            }\n" +
                     "\n" +
                     "            //子游戏不会在cc.game.run中再去加载，所以我们需要再这里加载一下我们的js脚本\n" +
-                    "            var bundledScript = cc.childgameSetting.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
+                    "            var bundledScript = cc[cc.custom.gameName].debug ? 'src/project.dev.js' : 'src/project.js';\n" +
                     "            bundledScript = cc.custom.curDir + bundledScript;\n" +
                     "            if (jsList) {\n" +
                     "                jsList = jsList.map(function (x) {\n" +
@@ -292,24 +300,23 @@ module.exports = {
                     "                require(jsList[i]);\n" +
                     "            }\n" +
                     "\n" +
-                    "            // } else {\n" +
-                    "            //     console.log('读取之前的加载   cc.chilgame=' + JSON.stringify(cc.chilgame));\n" +
-                    "            //     window._CCSettings = cc.chilgame;\n" +
-                    "            // }\n" +
                     "        } else {\n" +
                     "\n" +
-                    "            require(cc.custom.curDir + 'src/settings.js');\n" +
-                    "            cc.lobbySetting = window._CCSettings;//保存我们的大厅设置\n" +
+                    "            if (cc[cc.custom.lobbyName]) {//这里可能要注释，，缓存可能无用\n" +
+                    "                window._CCSettings = cc[cc.custom.lobbyName];\n" +
+                    "            } else {\n" +
+                    "                require(cc.custom.curDir + 'src/settings.js');\n" +
+                    "                cc[cc.custom.lobbyName] = window._CCSettings;//保存我们的大厅设置\n" +
+                    "            }\n" +
                     "\n" +
-                    "            console.log(\"cc.isBackFromBack = \" + cc.isBackFromBack);\n" +
-                    "            if (cc.isBackFromBack) {\n" +
-                    "                var bundledScript = cc.lobbySetting.debug ? 'src/project.dev.js' : 'src/project.js';\n" +
+                    "            console.log(\"cc.isBackFromGame = \" + cc.isBackFromGame);\n" +
+                    "            if (cc.isBackFromGame) {\n" +
+                    "                var bundledScript = cc[cc.custom.lobbyName].debug ? 'src/project.dev.js' : 'src/project.js';\n" +
                     "                bundledScript = cc.custom.curDir + bundledScript;\n" +
                     "            } else {\n" +
                     "                require(cc.custom.curDir + 'src/jsb_polyfill.js');\n" +
                     "            }\n" +
-                    "\n" +
-                    "            cc.isBackFromBack = false;\n" +
+                    "            cc.isBackFromGame = false;\n" +
                     "        }\n" +
                     "\n" +
                     "        boot();\n" +
