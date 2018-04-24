@@ -58,6 +58,7 @@ cc.Class({
 
         if (cc.sys.isNative) {//在native上加载失败，是因为没有找到目录，我们在testProtobuf函数里面添加一个搜索目录:
             jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//坑太多了。。没办法
+            jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(),true);
         }
 
         //检查是否游戏更新重启的
@@ -329,9 +330,9 @@ cc.Class({
 
         if (cc.sys.isNative) {
             if (customEventData === "1") {
-                var path = "C:/Users/Administrator/AppData/Local/hello_world/";
-                require(path + "Game1/main.js");
-                // require("Game1/main.js");//creator 编译不过
+                // var path = "C:/Users/Administrator/AppData/Local/hello_world/";
+                // require(path + "Game1/main.js");
+                require(""+"Game1/main.js");//前面是为了让creator编译过
 
                 // cc.loader.load(/*path +*/ "Game1/main.js", function (err, result) {
                 //     if (err) {

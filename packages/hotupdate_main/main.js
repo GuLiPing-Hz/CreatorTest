@@ -54,11 +54,13 @@ module.exports = {
                     "    //配置变量，游戏ID,0表示大厅\n" +
                     "    cc.custom.gameId = 0;\n" +
                     "\n" +
+                    "\n" +
+                    "    \n" +
                     "    cc.custom.gameName = \"Game\" + cc.custom.gameId;\n" +
                     "    cc.custom.lobbyName = \"Game0\";\n" +
                     "\n" +
                     "    cc.custom.isLobby = cc.custom.gameId === 0;\n" +
-                    "    cc.custom.curDir = cc.custom.isLobby ? \"\" : \"Game\" + gameId + \"/\";\n" +
+                    "    cc.custom.curDir = cc.custom.isLobby ? \"\" : cc.custom.gameName + \"/\";\n" +
                     "    console.log(\"cc.custom.curDir=\" + cc.custom.curDir);\n" +
                     "\n" +
                     "    if (cc.sys.isNative && cc.custom.isLobby) {\n" +
