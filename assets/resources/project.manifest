@@ -1,8 +1,8 @@
 {
-"packageUrl": "http://192.168.0.18:8080/CreatorTest/1.0.0/remote-assets/",
-"remoteManifestUrl": "http://192.168.0.18:8080/CreatorTest/1.0.0/remote-assets/project.manifest",
-"remoteVersionUrl": "http://192.168.0.18:8080/CreatorTest/1.0.0/remote-assets/version.manifest",
-"version": "1.0.0",
+"packageUrl": "http://192.168.0.18:8080/CreatorTest/1.0.2/remote-assets/",
+"remoteManifestUrl": "http://192.168.0.18:8080/CreatorTest/1.0.2/remote-assets/project.manifest",
+"remoteVersionUrl": "http://192.168.0.18:8080/CreatorTest/1.0.2/remote-assets/version.manifest",
+"version": "1.0.2",
 "assets": {
 "src/jsb_polyfill.js": {
 "path": "src/jsb_polyfill.js",
@@ -13,7 +13,7 @@
 "src/project.dev.js": {
 "path": "src/project.dev.js",
 "size": 18576,
-"md5": "132331021D3D287322C424FC33E04782",
+"md5": "21FDC2902276BD4AA59B238696A5D238",
 "compressed": false
 },
 "src/settings.js": {

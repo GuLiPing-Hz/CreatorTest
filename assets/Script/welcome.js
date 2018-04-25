@@ -79,7 +79,7 @@ cc.Class({
         Log.i("this._reStart = " + this._reStart + ",type=" + typeof this._reStart);
         cc.sys.localStorage.setItem(STRING_GAME_RESTART, "0");
 
-        this.label.string = "检查版本 0";
+        this.label.string = "检查版本 2";
 
         // this.button.on(cc.Node.EventType.TOUCH_END, function () {
         //     that.showProgress();
