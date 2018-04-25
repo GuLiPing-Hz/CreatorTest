@@ -42,6 +42,7 @@ cc.Class({
         },
 
         _reStart: false,
+        _updatePath: "",
         // bar: {
         //     get () {
         //         return this._bar;
@@ -58,10 +59,13 @@ cc.Class({
         cc.log("onLoad test");
 
         if (cc.sys.isNative) {//在native上加载失败，是因为没有找到目录，我们在testProtobuf函数里面添加一个搜索目录:
+            this._updatePath = jsb.fileUtils ? jsb.fileUtils.getWritablePath() + "update/" : "./";
+
             var isFirstRun = cc.sys.localStorage.getItem(STRING_GAME_FIRST_RUN);
             if (isFirstRun === null || isFirstRun === "1") {
                 jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//添加搜索目录
-                jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(), true);//子游戏目录/热更新目录
+                jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(), true);//子游戏目录
+                jsb.fileUtils.addSearchPath(this._updatePath, true);//添加热更新目录
 
                 var searchPaths = jsb.fileUtils.getSearchPaths();//获取当前的搜索目录
                 console.log("searchPaths=" + JSON.stringify(searchPaths));
@@ -75,7 +79,7 @@ cc.Class({
         Log.i("this._reStart = " + this._reStart + ",type=" + typeof this._reStart);
         cc.sys.localStorage.setItem(STRING_GAME_RESTART, "0");
 
-        this.label.string = "检查版本 2";
+        this.label.string = "检查版本 0";
 
         // this.button.on(cc.Node.EventType.TOUCH_END, function () {
         //     that.showProgress();
@@ -127,13 +131,13 @@ cc.Class({
         var that = this;
 
         //热更新路径
-        var storagePath = (jsb.fileUtils ? jsb.fileUtils.getWritablePath() : "./");
+        var storagePath = this._updatePath;//调整热更新路径
 
         // var tempDelete = jsb.fileUtils.getWritablePath() + "delete/";
         // jsb.fileUtils.createDirectory(tempDelete);
         // jsb.fileUtils.removeDirectory(tempDelete);
 
-        Log.i("storagePath is " + storagePath + ",this.manifestUrl=" + this.manifestUrl);
+        Log.i("checkUpdate storagePath =" + storagePath + ",this.manifestUrl=" + this.manifestUrl);
         // jsb.fileUtils.addSearchPath("res/");
         // jsb.fileUtils.addSearchPath(storagePath + "update/", true);//所有数据包都需要存放到一个update的热更新目录中
 
@@ -394,13 +398,15 @@ cc.Class({
             console.log("searchPaths=" + JSON.stringify(searchPaths));
             var newPaths = this._assetManager.getLocalManifest().getSearchPaths();
             console.log("newPaths=" + JSON.stringify(newPaths));
-            Array.prototype.unshift(searchPaths, newPaths);
-            // This value will be retrieved and appended to the default search path during game startup,
-            // please refer to samples/js-tests/main.js for detailed usage.
-            // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
-            cc.sys.localStorage.setItem('HotUpdateSearchPaths', JSON.stringify(searchPaths));
-            console.log("setSearchPaths 2");
-            jsb.fileUtils.setSearchPaths(searchPaths);
+
+            //我们暂不支持在更新包里面添加新的搜索路径
+            // Array.prototype.unshift(searchPaths, newPaths);
+            // // This value will be retrieved and appended to the default search path during game startup,
+            // // please refer to samples/js-tests/main.js for detailed usage.
+            // // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
+            // cc.sys.localStorage.setItem('HotUpdateSearchPaths', JSON.stringify(searchPaths));
+            // console.log("setSearchPaths 2");
+            // jsb.fileUtils.setSearchPaths(searchPaths);
 
             cc.audioEngine.stopAll();
 
