@@ -56,7 +56,6 @@ module.exports = {
                     "    cc.custom.gameId = 1;\n" +
                     "\n" +
                     "\n" +
-                    "    \n" +
                     "    cc.custom.gameName = \"Game\" + cc.custom.gameId;\n" +
                     "    cc.custom.lobbyName = \"Game0\";\n" +
                     "\n" +
@@ -65,10 +64,16 @@ module.exports = {
                     "    console.log(\"cc.custom.curDir=\" + cc.custom.curDir);\n" +
                     "\n" +
                     "    if (cc.sys.isNative && cc.custom.isLobby) {\n" +
-                    "        var hotUpdateSearchPaths = cc.sys.localStorage.getItem('HotUpdateSearchPaths');\n" +
-                    "        if (hotUpdateSearchPaths) {\n" +
-                    "            jsb.fileUtils.setSearchPaths(JSON.parse(hotUpdateSearchPaths));\n" +
-                    "        }\n" +
+                    "        //大厅更新目录\n" +
+                    "        var updatePath = jsb.fileUtils ? jsb.fileUtils.getWritablePath() + \"update/\" : \"./\";\n" +
+                    "\n" +
+                    "        //添加游戏的搜索目录\n" +
+                    "        jsb.fileUtils.addSearchPath(\"res/raw-assets/resources\", true);//添加resources目录\n" +
+                    "        jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(), true);//子游戏目录\n" +
+                    "        jsb.fileUtils.addSearchPath(updatePath, true);//添加热更新目录\n" +
+                    "\n" +
+                    "        var searchPaths = jsb.fileUtils.getSearchPaths();//获取当前的搜索目录\n" +
+                    "        console.log(\"searchPaths=\" + JSON.stringify(searchPaths));\n" +
                     "    }\n" +
                     "\n" +
                     "    'use strict';\n" +

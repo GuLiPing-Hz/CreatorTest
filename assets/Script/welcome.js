@@ -1,5 +1,4 @@
 var STRING_GAME_RESTART = "GameRestart";
-var STRING_GAME_FIRST_RUN = "GameFirstRun";
 
 cc.Class({
     extends: cc.Component,
@@ -57,22 +56,6 @@ cc.Class({
 
     onLoad: function () {
         cc.log("onLoad test");
-
-        if (cc.sys.isNative) {//在native上加载失败，是因为没有找到目录，我们在testProtobuf函数里面添加一个搜索目录:
-            this._updatePath = jsb.fileUtils ? jsb.fileUtils.getWritablePath() + "update/" : "./";
-
-            var isFirstRun = cc.sys.localStorage.getItem(STRING_GAME_FIRST_RUN);
-            if (isFirstRun === null || isFirstRun === "1") {
-                jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//添加搜索目录
-                jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(), true);//子游戏目录
-                jsb.fileUtils.addSearchPath(this._updatePath, true);//添加热更新目录
-
-                var searchPaths = jsb.fileUtils.getSearchPaths();//获取当前的搜索目录
-                console.log("searchPaths=" + JSON.stringify(searchPaths));
-                cc.sys.localStorage.setItem('HotUpdateSearchPaths', JSON.stringify(searchPaths));
-                cc.sys.localStorage.setItem(STRING_GAME_FIRST_RUN, "0");
-            }
-        }
 
         //检查是否游戏更新重启的
         this._reStart = cc.sys.localStorage.getItem(STRING_GAME_RESTART) === "1";
@@ -234,7 +217,7 @@ cc.Class({
                         if (!that._reStart) {
                             setTimeout(function () {
                                 that.button.active = true;
-                            }, 1000);
+                            }, 500);
                         } else {
                             that.doUpdate();
                         }
@@ -410,6 +393,7 @@ cc.Class({
 
             cc.audioEngine.stopAll();
 
+            //为了更新，我们需要重启，并记录标志
             cc.sys.localStorage.setItem(STRING_GAME_RESTART, "1");
             cc.game.restart();
         } else {//游戏更新检查完毕
