@@ -62,7 +62,7 @@ module.exports = {
                     "    cc.custom.curDir = cc.custom.isLobby ? \"\" : cc.custom.gameName + \"/\";\n" +
                     "    console.log(\"cc.custom.curDir=\" + cc.custom.curDir);\n" +
                     "\n" +
-                    "    if (cc.sys.isNative && cc.custom.isLobby) {\n" +
+                    "    if (cc.sys.isNative && cc.custom.isLobby) {//下面这样写，主要是为了解决xcode调试的时候app目录是会变的\n" +
                     "        //大厅更新目录\n" +
                     "        var updatePath = jsb.fileUtils ? jsb.fileUtils.getWritablePath() + \"update/\" : \"./\";\n" +
                     "\n" +
