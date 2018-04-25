@@ -41,7 +41,7 @@ cc.Class({
         },
 
         _reStart: false,
-        _updatePath: "",
+        _updatePath: ""
         // bar: {
         //     get () {
         //         return this._bar;
@@ -56,6 +56,8 @@ cc.Class({
 
     onLoad: function () {
         cc.log("onLoad test");
+
+        this._updatePath = jsb.fileUtils ? jsb.fileUtils.getWritablePath() + "update/" : "./";
 
         //检查是否游戏更新重启的
         this._reStart = cc.sys.localStorage.getItem(STRING_GAME_RESTART) === "1";
