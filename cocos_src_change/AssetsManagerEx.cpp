@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
 
  http://www.cocos2d-x.org
@@ -1262,7 +1262,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
             }
 
 			//by glp 把没有增加的增加一下
-			_totalDownloaded += downloaded;// 
+			_totalDownloaded += downloaded;
 		}
         
         if (_totalEnabled && _updateState == State::UPDATING)

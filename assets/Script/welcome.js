@@ -1,4 +1,5 @@
-var STR_GameReStart = "GameReStart";
+var STRING_GAME_RESTART = "GameRestart";
+var STRING_GAME_FIRST_RUN = "GameFirstRun";
 
 cc.Class({
     extends: cc.Component,
@@ -57,16 +58,24 @@ cc.Class({
         cc.log("onLoad test");
 
         if (cc.sys.isNative) {//在native上加载失败，是因为没有找到目录，我们在testProtobuf函数里面添加一个搜索目录:
-            jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//坑太多了。。没办法
-            jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(),true);
+            var isFirstRun = cc.sys.localStorage.getItem(STRING_GAME_FIRST_RUN);
+            if (isFirstRun === null || isFirstRun === "1") {
+                jsb.fileUtils.addSearchPath("res/raw-assets/resources", true);//添加搜索目录
+                jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(), true);//子游戏目录/热更新目录
+
+                var searchPaths = jsb.fileUtils.getSearchPaths();//获取当前的搜索目录
+                console.log("searchPaths=" + JSON.stringify(searchPaths));
+                cc.sys.localStorage.setItem('HotUpdateSearchPaths', JSON.stringify(searchPaths));
+                cc.sys.localStorage.setItem(STRING_GAME_FIRST_RUN, "0");
+            }
         }
 
         //检查是否游戏更新重启的
-        this._reStart = cc.sys.localStorage.getItem(STR_GameReStart) === "1";
+        this._reStart = cc.sys.localStorage.getItem(STRING_GAME_RESTART) === "1";
         Log.i("this._reStart = " + this._reStart + ",type=" + typeof this._reStart);
-        cc.sys.localStorage.setItem(STR_GameReStart, "0");
+        cc.sys.localStorage.setItem(STRING_GAME_RESTART, "0");
 
-        this.label.string = "检查版本";
+        this.label.string = "检查版本 2";
 
         // this.button.on(cc.Node.EventType.TOUCH_END, function () {
         //     that.showProgress();
@@ -83,9 +92,8 @@ cc.Class({
         cc.director.setDisplayStats(true);
         // // }
 
-        //cc.loader.load()
-        // this.checkUpdate();
-        this.loadGame();
+        this.checkUpdate();
+        // this.loadGame();
     },
 
     start: function () {
@@ -332,7 +340,7 @@ cc.Class({
             if (customEventData === "1") {
                 // var path = "C:/Users/Administrator/AppData/Local/hello_world/";
                 // require(path + "Game1/main.js");
-                require(""+"Game1/main.js");//前面是为了让creator编译过
+                require("" + "Game1/main.js");//前面是为了让creator编译过
 
                 // cc.loader.load(/*path +*/ "Game1/main.js", function (err, result) {
                 //     if (err) {
@@ -383,18 +391,20 @@ cc.Class({
             this._updateListener = null;
             // Prepend the manifest's search path
             var searchPaths = jsb.fileUtils.getSearchPaths();
+            console.log("searchPaths=" + JSON.stringify(searchPaths));
             var newPaths = this._assetManager.getLocalManifest().getSearchPaths();
-            console.log(JSON.stringify(newPaths));
+            console.log("newPaths=" + JSON.stringify(newPaths));
             Array.prototype.unshift(searchPaths, newPaths);
             // This value will be retrieved and appended to the default search path during game startup,
             // please refer to samples/js-tests/main.js for detailed usage.
             // !!! Re-add the search paths in main.js is very important, otherwise, new scripts won't take effect.
             cc.sys.localStorage.setItem('HotUpdateSearchPaths', JSON.stringify(searchPaths));
+            console.log("setSearchPaths 2");
             jsb.fileUtils.setSearchPaths(searchPaths);
 
             cc.audioEngine.stopAll();
 
-            cc.sys.localStorage.setItem(STR_GameReStart, "1");
+            cc.sys.localStorage.setItem(STRING_GAME_RESTART, "1");
             cc.game.restart();
         } else {//游戏更新检查完毕
             cc.log("游戏更新检查完毕");
