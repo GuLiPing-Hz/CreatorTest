@@ -388,6 +388,10 @@ bool AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
                 _fileUtils->removeDirectory(_storagePath);
                 _fileUtils->createDirectory(_storagePath);
                 CC_SAFE_RELEASE(cachedManifest);
+
+				//by glp 本地版本大于缓冲中的版本需要重启启动一下
+				CCLOG("AssetsManagerEx : local version is newer, game need restart.\n");
+				cocos2d::Director::getInstance()->restart();
             }
             else
             {
