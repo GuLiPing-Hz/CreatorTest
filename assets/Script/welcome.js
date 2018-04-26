@@ -24,6 +24,8 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        barGame1: cc.Node,
+
         btnGame2: {
             default: null,
             type: cc.Node
@@ -39,6 +41,7 @@ cc.Class({
         _assetManager: {
             default: null,
         },
+        _assetManagerGame: null,
 
         _reStart: false,
         _updatePath: ""
@@ -100,6 +103,10 @@ cc.Class({
         if (this._assetManager && !cc.sys.ENABLE_GC_FOR_NATIVE_OBJECTS) {
             this._assetManager.release();
         }
+    },
+
+    checkGameUpdate: function (gameId) {
+
     },
 
     /**
