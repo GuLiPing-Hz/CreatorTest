@@ -153,17 +153,27 @@
     "btnGame1": {
       "__id__": 18
     },
-    "barGame1": {
-      "__id__": 21
-    },
+    "barGame": [
+      {
+        "__id__": 25
+      }
+    ],
     "btnGame2": {
       "__id__": 30
     },
     "manifestUrl": {
       "__uuid__": "61130c7d-21ef-4a4d-838d-dc9005e6c41c"
     },
+    "manifestUrlGame": [
+      {
+        "__uuid__": "e5b9bafa-0cbd-48fb-9a16-8f40dceae41d"
+      }
+    ],
     "_failCount": 0,
     "_assetManager": null,
+    "_assetListener": null,
+    "_assetManagerGame": null,
+    "_assetListenerGame": null,
     "_reStart": false,
     "_updatePath": ""
   },

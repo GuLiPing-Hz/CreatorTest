@@ -1,0 +1,8 @@
+{
+"packageUrl": "http://192.168.0.18:8080/CreatorTest/Game1/",
+"remoteManifestUrl": "http://192.168.0.18:8080/CreatorTest/Game1/project.manifest",
+"remoteVersionUrl": "http://192.168.0.18:8080/CreatorTest/Game1/version.manifest",
+"version": "1.0.0",
+"assets": {},
+"searchPaths": []
+}
