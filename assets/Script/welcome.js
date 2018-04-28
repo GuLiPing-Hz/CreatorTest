@@ -69,7 +69,7 @@ cc.Class({
         Log.i("this._reStart = " + this._reStart + ",type=" + typeof this._reStart);
         cc.sys.localStorage.setItem(STRING_GAME_RESTART, "0");
 
-        this.label.string = "检查版本 2";
+        this.label.string = "检查版本 0";
 
         // this.button.on(cc.Node.EventType.TOUCH_END, function () {
         //     that.showProgress();
@@ -394,12 +394,39 @@ cc.Class({
         }
     },
 
+    clickCheckGame: function (event, data) {
+        if (event)
+            Log.i("clickCheckGame event=", event.type, " data=", data);
+
+        if (cc.sys.isNative) {
+
+            this.checkGameUpdate(parseInt(data));
+
+            // if (customEventData === "1") {
+            //     // var path = "C:/Users/Administrator/AppData/Local/hello_world/";
+            //     // require(path + "Game1/main.js");
+            //     require("" + "Game1/main.js");//前面是为了让creator编译过
+            //
+            //     // cc.loader.load(/*path +*/ "Game1/main.js", function (err, result) {
+            //     //     if (err) {
+            //     //         Log.i("clickGoGame err = " + err);
+            //     //     } else {
+            //     //         Log.i("clickGoGame load resources/Game1/main.js result = " + result);
+            //     //         eval(result);
+            //     //     }
+            //     // });
+            // }
+        } else {
+            Log.i("网页进入子游戏未实现");
+        }
+    },
+
     checkGameUpdate: function (gameId) {
         var that = this;
 
         var gameManifestUrl = cc.url.raw("resources/project_game_" + gameId + ".manifest");
         Log.i("checkGameUpdate gameManifestUrl = " + gameManifestUrl);
-        var gameStoragePath = jsb.fileUtils.getWritablePath() + "Game" + gameId;
+        var gameStoragePath = jsb.fileUtils.getWritablePath() + "child-game";
         Log.i("checkGameUpdate gameStoragePath = " + gameStoragePath);
 
         if (this._assetManagerGame) {//如果已经检查过一个游戏
@@ -561,9 +588,6 @@ cc.Class({
     },
 
     doGameUpdate: function (gameId) {
-        if (event)
-            Log.i("doUpdate event=", event.type, " data=", customEventData);
-
         var index = gameId - 1;
         //显示进度条
         if (this.barGame[index]) {
@@ -592,33 +616,7 @@ cc.Class({
         if (errorStr) {
             Log.i("enterGame errorStr = " + errorStr);
         } else {
-            this.clickGoGame(null, gameId);
-        }
-    },
-
-    clickGoGame: function (event, customEventData) {
-        if (event)
-            Log.i("clickGoGame event=", event.type, " data=", customEventData);
-
-        if (cc.sys.isNative) {
-            require("Game" + customEventData + "/main.js");//前面是为了让creator编译过
-
-            // if (customEventData === "1") {
-            //     // var path = "C:/Users/Administrator/AppData/Local/hello_world/";
-            //     // require(path + "Game1/main.js");
-            //     require("" + "Game1/main.js");//前面是为了让creator编译过
-            //
-            //     // cc.loader.load(/*path +*/ "Game1/main.js", function (err, result) {
-            //     //     if (err) {
-            //     //         Log.i("clickGoGame err = " + err);
-            //     //     } else {
-            //     //         Log.i("clickGoGame load resources/Game1/main.js result = " + result);
-            //     //         eval(result);
-            //     //     }
-            //     // });
-            // }
-        } else {
-            Log.i("网页进入子游戏未实现");
+            require("Game" + gameId + "/main.js");//前面是为了让creator编译过
         }
     },
 });

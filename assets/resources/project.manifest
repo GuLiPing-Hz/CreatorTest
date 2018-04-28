@@ -12,14 +12,14 @@
 },
 "src/project.dev.js": {
 "path": "src/project.dev.js",
-"size": 17819,
-"md5": "F4ABB53CCD79BCF073EE91355BC9868C",
+"size": 24502,
+"md5": "65BD6A3A243CBAD0A27595FB3D1F9C13",
 "compressed": false
 },
 "src/settings.js": {
 "path": "src/settings.js",
-"size": 4831,
-"md5": "2D4D86AA3DF331D0BE1DF3BD713125F5",
+"size": 4969,
+"md5": "BF30DE5B6F87A09CFCA460F324B9ABEC",
 "compressed": false
 },
 "src/assets/Script/log.js": {
@@ -48,8 +48,8 @@
 },
 "res/import/07/0751d6a98.json": {
 "path": "res/import/07/0751d6a98.json",
-"size": 14922,
-"md5": "8DB35EA04952286E0999994EF637B5EB",
+"size": 16894,
+"md5": "86673F2F89A4163C88BACB78E4D59594",
 "compressed": false
 },
 "res/import/0a/0aa552174.json": {

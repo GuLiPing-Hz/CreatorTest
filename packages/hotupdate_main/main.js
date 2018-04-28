@@ -70,10 +70,10 @@ module.exports = {
                     "        jsb.fileUtils.addSearchPath(\"res/raw-assets/resources\", true);//添加resources目录\n" +
                     "        jsb.fileUtils.addSearchPath(jsb.fileUtils.getWritablePath(), true);//子游戏目录\n" +
                     "        jsb.fileUtils.addSearchPath(updatePath, true);//添加热更新目录\n" +
-                    "\n" +
-                    "        var searchPaths = jsb.fileUtils.getSearchPaths();//获取当前的搜索目录\n" +
-                    "        console.log(\"searchPaths=\" + JSON.stringify(searchPaths));\n" +
                     "    }\n" +
+                    "\n" +
+                    "    var searchPaths = jsb.fileUtils.getSearchPaths();//获取当前的搜索目录\n" +
+                    "    console.log(\"searchPaths=\" + JSON.stringify(searchPaths));\n" +
                     "\n" +
                     "    'use strict';\n" +
                     "\n" +
