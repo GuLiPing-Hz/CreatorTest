@@ -469,7 +469,7 @@
 
                     if (cc.sys.isNative) {//native
                         var content = jsb.fileUtils.getStringFromFile(filename);
-                        callback(null, content);
+                        callback(content === "" ? Error(filename + " not exits") : null, content);
                     } else {
                         //cc.log("cc.loader load 1 filename=" + filename);
                         //这里可以加载一个url图片 : "Host"+filename
